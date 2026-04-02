@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Folio IA — Entenda seus exames com IA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Bricolage+Grotesque:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      /* Exact tokens from src/index.css */
+      --app-bg: hsl(210,20%,98%);
+      --app-card: hsl(0,0%,100%);
+      --app-primary: hsl(217,91%,55%);
+      --app-primary-light: hsl(214,80%,93%);
+      --app-muted: hsl(210,20%,95%);
+      --app-muted-fg: hsl(215,14%,46%);
+      --app-border: hsl(214,20%,90%);
+      --app-fg: hsl(220,20%,10%);
+      --app-success: hsl(152,60%,40%);
+      --app-warning: hsl(38,92%,50%);
+      --app-destructive: hsl(0,72%,51%);
+
+      /* Landing page tokens */
+      --blue-900: #0A1628;
+      --blue-800: #0F2348;
+      --blue-600: #1E4DB7;
+      --blue-500: #2563EB;
+      --blue-400: #3B82F6;
+      --blue-300: #93C5FD;
+      --blue-100: #DBEAFE;
+      --blue-50:  #EFF6FF;
+      --white: #FFFFFF;
+      --gray-50: #F8FAFC;
+      --gray-100: #F1F5F9;
+      --gray-200: #E2E8F0;
+      --gray-400: #94A3B8;
+      --gray-600: #475569;
+      --gray-800: #1E293B;
+      --accent-teal: #10B981;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--gray-800);
+      background: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      position: fixed; top:0; left:0; right:0; z-index:200;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--gray-200);
+      padding: 0 48px; height: 68px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:1.3rem; color:var(--blue-900); letter-spacing:-0.03em; }
+    .nav-logo span { color:var(--blue-500); }
+    .nav-links { display:flex; gap:36px; list-style:none; }
+    .nav-links a { text-decoration:none; font-size:0.875rem; font-weight:500; color:var(--gray-600); transition:color 0.2s; }
+    .nav-links a:hover { color:var(--blue-600); }
+    .nav-cta { background:var(--blue-500)!important; color:white!important; padding:10px 22px; border-radius:8px; font-weight:600!important; transition:background 0.2s!important; }
+    .nav-cta:hover { background:var(--blue-600)!important; }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height:100vh; padding-top:68px;
+      background: linear-gradient(160deg, #EFF6FF 0%, #DBEAFE 45%, #EFF6FF 100%);
+      display:flex; align-items:center; position:relative; overflow:hidden;
+    }
+    .hero::before {
+      content:''; position:absolute; width:700px; height:700px; border-radius:50%;
+      background:radial-gradient(circle,rgba(59,130,246,0.13) 0%,transparent 70%);
+      top:-200px; right:-150px; pointer-events:none;
+    }
+    .hero::after {
+      content:''; position:absolute; width:400px; height:400px; border-radius:50%;
+      background:radial-gradient(circle,rgba(16,185,129,0.08) 0%,transparent 70%);
+      bottom:0; left:80px; pointer-events:none;
+    }
+    .hero-inner {
+      max-width:1240px; margin:0 auto; padding:80px 48px;
+      display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;
+      position:relative; z-index:1; width:100%;
+    }
+    .hero-badge {
+      display:inline-flex; align-items:center; gap:8px;
+      background:white; border:1px solid #BFDBFE; border-radius:100px;
+      padding:6px 14px; font-size:0.75rem; font-weight:600; color:var(--blue-600); margin-bottom:28px;
+    }
+    .hero-badge .dot { width:7px; height:7px; border-radius:50%; background:var(--accent-teal); animation:pulse 2s ease infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(0.85)} }
+    .hero h1 { font-family:'Bricolage Grotesque',sans-serif; font-size:clamp(2.4rem,4.5vw,3.7rem); font-weight:800; line-height:1.07; letter-spacing:-0.03em; color:var(--blue-900); margin-bottom:24px; }
+    .hero h1 .hl { color:var(--blue-500); }
+    .hero-desc { font-size:1.05rem; line-height:1.75; color:var(--gray-600); margin-bottom:40px; max-width:480px; }
+    .hero-form { display:flex; gap:10px; max-width:460px; margin-bottom:14px; }
+    .hero-form input { flex:1; padding:14px 18px; border:1.5px solid var(--gray-200); border-radius:10px; font-family:inherit; font-size:0.9rem; color:var(--gray-800); background:white; outline:none; transition:border-color 0.2s,box-shadow 0.2s; }
+    .hero-form input:focus { border-color:var(--blue-400); box-shadow:0 0 0 3px rgba(59,130,246,0.12); }
+    .hero-form input::placeholder { color:var(--gray-400); }
+    .btn-primary { background:var(--blue-500); color:white; border:none; border-radius:10px; padding:14px 24px; font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:0.9rem; cursor:pointer; white-space:nowrap; transition:background 0.2s,transform 0.1s; box-shadow:0 4px 14px rgba(37,99,235,0.3); }
+    .btn-primary:hover { background:var(--blue-600); }
+    .btn-primary:active { transform:scale(0.98); }
+    .hero-note { font-size:0.78rem; color:var(--gray-400); }
+    .success-msg { display:none; font-size:0.85rem; font-weight:600; color:var(--accent-teal); margin-top:14px; }
+    .hero-trust { display:flex; align-items:center; gap:18px; margin-top:36px; }
+    .trust-item { display:flex; align-items:center; gap:8px; font-size:0.78rem; font-weight:500; color:var(--gray-600); }
+    .trust-icon { width:28px; height:28px; background:white; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:0.9rem; box-shadow:0 1px 4px rgba(0,0,0,0.08); }
+    .trust-sep { width:1px; height:22px; background:var(--gray-200); }
+
+    /* ===== PHONE MOCKUPS WRAPPER ===== */
+    .hero-phones { position:relative; display:flex; justify-content:center; align-items:flex-end; height:580px; }
+
+    /* Base phone shell — matches real iOS proportions */
+    .phone {
+      position:absolute; border-radius:40px;
+      background:white;
+      box-shadow: 0 32px 90px rgba(10,22,40,0.22), 0 0 0 1.5px rgba(0,0,0,0.07), inset 0 0 0 1px rgba(255,255,255,0.8);
+      overflow:hidden; bottom:0;
+    }
+    .phone-main { width:248px; z-index:3; left:50%; transform:translateX(-50%); }
+    .phone-left  { width:206px; z-index:2; left:0; bottom:40px; transform:rotate(-7deg); opacity:0.93; }
+    .phone-right { width:206px; z-index:2; right:0; bottom:40px; transform:rotate(7deg); opacity:0.93; }
+
+    /* Dynamic island / notch */
+    .phone-island {
+      width:90px; height:26px; background:#111; border-radius:0 0 16px 16px;
+      margin:0 auto; position:relative; z-index:2;
+    }
+
+    /* ====================== APP SCREEN: HOME PAGE ====================== */
+    .screen-home { background:hsl(210,20%,98%); }
+
+    /* Header bar — from AppLayout.tsx */
+    .app-header {
+      height:52px; background:white; border-bottom:1px solid hsl(214,20%,90%);
+      display:flex; align-items:center; justify-content:space-between; padding:0 14px;
+    }
+    .app-header-logo { display:flex; align-items:center; gap:6px; }
+    .app-logo-mark { width:26px; height:26px; background:hsl(217,91%,55%); border-radius:7px; display:flex; align-items:center; justify-content:center; }
+    .app-logo-mark svg { width:14px; height:14px; }
+    .app-logo-text { font-family:'Bricolage Grotesque',sans-serif; font-size:0.85rem; font-weight:700; color:hsl(220,20%,10%); }
+    .app-header-avatar { width:28px; height:28px; border-radius:50%; background:hsl(215,14%,46%); display:flex; align-items:center; justify-content:center; font-size:0.5rem; color:white; font-weight:600; }
+
+    /* Hero band — from HomePage.tsx */
+    .home-hero-band {
+      background:hsl(217,91%,55%); padding:14px 14px 22px;
+    }
+    .home-hero-top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px; }
+    .home-greeting { font-family:'Bricolage Grotesque',sans-serif; font-size:0.85rem; font-weight:600; color:white; line-height:1.2; }
+    .home-sub { font-size:0.5rem; color:rgba(255,255,255,0.65); margin-top:2px; }
+    .home-initials { width:32px; height:32px; border-radius:50%; background:rgba(255,255,255,0.2); display:flex; align-items:center; justify-content:center; font-size:0.55rem; font-weight:700; color:white; }
+    .home-chips { display:flex; gap:7px; }
+    .home-chip { display:flex; align-items:center; gap:5px; background:rgba(255,255,255,0.15); border-radius:14px; padding:5px 10px; }
+    .home-chip-val { font-family:'Bricolage Grotesque',sans-serif; font-size:0.75rem; font-weight:700; color:white; }
+    .home-chip-val.warn { color:#fde68a; }
+    .home-chip-label { font-size:0.42rem; color:rgba(255,255,255,0.65); }
+
+    /* Page content area */
+    .home-content { padding:10px 10px 0; }
+    .section-label { font-size:0.42rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:hsl(215,14%,46%); margin-bottom:7px; margin-top:10px; }
+
+    /* Quick action cards */
+    .quick-grid { display:grid; grid-template-columns:1fr 1fr; gap:7px; margin-bottom:10px; }
+    .quick-card { background:white; border:1px solid hsl(214,20%,90%); border-radius:11px; padding:12px 8px; display:flex; flex-direction:column; align-items:center; gap:6px; cursor:default; }
+    .quick-icon { width:34px; height:34px; background:hsl(214,80%,93%); border-radius:9px; display:flex; align-items:center; justify-content:center; }
+    .quick-icon svg { width:16px; height:16px; color:hsl(217,91%,55%); }
+    .quick-label { font-size:0.5rem; font-weight:600; color:hsl(220,20%,10%); text-align:center; }
+
+    /* Recent exam rows */
+    .recent-card { background:white; border:1px solid hsl(214,20%,90%); border-radius:10px; padding:7px 10px; display:flex; align-items:center; gap:8px; margin-bottom:5px; }
+    .recent-dot { width:7px; height:7px; border-radius:50%; background:hsl(217,91%,55%); flex-shrink:0; }
+    .recent-name { font-size:0.52rem; font-weight:600; color:hsl(220,20%,10%); }
+    .recent-lab  { font-size:0.42rem; color:hsl(215,14%,46%); }
+    .recent-badge { margin-left:auto; background:hsl(210,20%,95%); border-radius:20px; padding:2px 7px; font-size:0.42rem; font-weight:500; color:hsl(215,14%,46%); white-space:nowrap; }
+
+    /* Bottom nav — from AppLayout.tsx */
+    .app-bottom-nav {
+      background:white; border-top:1px solid hsl(214,20%,90%);
+      display:flex; justify-content:space-around; padding:6px 0 10px;
+    }
+    .nav-item { display:flex; flex-direction:column; align-items:center; gap:2px; padding:3px 10px; position:relative; }
+    .nav-item svg { width:16px; height:16px; }
+    .nav-item span { font-size:0.38rem; font-weight:500; }
+    .nav-item.active svg, .nav-item.active span { color:hsl(217,91%,55%); }
+    .nav-item.inactive svg, .nav-item.inactive span { color:hsl(215,14%,46%); }
+    .nav-item.active::after { content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:14px; height:2px; background:hsl(217,91%,55%); border-radius:2px; }
+
+    /* ====================== APP SCREEN: METRICS ====================== */
+    .screen-metrics { background:hsl(210,20%,98%); }
+
+    .metrics-content { padding:10px; }
+    .metrics-title { font-family:'Bricolage Grotesque',sans-serif; font-size:0.85rem; font-weight:800; color:hsl(220,20%,10%); margin-bottom:10px; }
+
+    /* Stats row */
+    .stats-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:5px; margin-bottom:10px; }
+    .stat-card { background:white; border:1px solid hsl(214,20%,90%); border-radius:9px; padding:7px 4px; display:flex; flex-direction:column; align-items:center; gap:3px; }
+    .stat-card svg { width:12px; height:12px; }
+    .stat-num { font-family:'Bricolage Grotesque',sans-serif; font-size:0.85rem; font-weight:800; color:hsl(220,20%,10%); }
+    .stat-lbl { font-size:0.38rem; color:hsl(215,14%,46%); text-transform:uppercase; letter-spacing:0.06em; }
+
+    /* Category divider */
+    .cat-divider { display:flex; align-items:center; gap:6px; padding:6px 0 5px; }
+    .cat-line { flex:1; height:1px; background:hsl(214,20%,90%); }
+    .cat-name { font-size:0.38rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:hsl(215,14%,46%); }
+
+    /* Biomarker cards grid — from BiomarkerCard.tsx */
+    .bio-grid { display:grid; grid-template-columns:1fr 1fr; gap:5px; margin-bottom:8px; }
+    .bio-card { background:white; border:1px solid hsl(214,20%,90%); border-radius:9px; padding:8px; }
+    .bio-top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:5px; }
+    .bio-name { font-size:0.46rem; font-weight:700; color:hsl(220,20%,10%); line-height:1.3; }
+    .bio-badge { font-size:0.38rem; font-weight:600; padding:1.5px 5px; border-radius:20px; border:1px solid; white-space:nowrap; }
+    .bio-badge.ok   { background:hsl(152,60%,40%,0.12); color:hsl(152,60%,30%); border-color:hsl(152,60%,40%,0.25); }
+    .bio-badge.warn { background:hsl(38,92%,50%,0.12); color:hsl(38,72%,35%); border-color:hsl(38,92%,50%,0.25); }
+    .bio-badge.high { background:hsl(0,72%,51%,0.1); color:hsl(0,72%,45%); border-color:hsl(0,72%,51%,0.2); }
+    .bio-value { font-family:'Bricolage Grotesque',sans-serif; font-size:0.9rem; font-weight:800; color:hsl(220,20%,10%); line-height:1; }
+    .bio-unit  { font-size:0.38rem; color:hsl(215,14%,46%); }
+    /* Reference bar */
+    .ref-bar-track { height:3px; background:hsl(210,20%,95%); border-radius:2px; overflow:hidden; margin-top:5px; position:relative; }
+    .ref-bar-normal { position:absolute; top:0; height:100%; background:hsl(152,60%,40%,0.18); border-radius:2px; }
+    .ref-bar-dot { position:absolute; top:50%; transform:translate(-50%,-50%); width:8px; height:8px; border-radius:50%; border:1.5px solid white; }
+    .ref-bar-dot.ok   { background:hsl(152,60%,40%); }
+    .ref-bar-dot.warn { background:hsl(38,92%,50%); }
+    .ref-bar-dot.high { background:hsl(0,72%,51%); }
+    .bio-footer { display:flex; justify-content:space-between; margin-top:4px; }
+    .bio-trend { font-size:0.38rem; color:hsl(215,14%,46%); display:flex; align-items:center; gap:2px; }
+    .bio-date  { font-size:0.38rem; color:hsl(215,14%,46%); }
+
+    /* Chart card */
+    .chart-card { background:white; border:1px solid hsl(214,20%,90%); border-radius:10px; padding:9px; }
+    .chart-card-title { font-size:0.5rem; font-weight:600; color:hsl(220,20%,10%); margin-bottom:7px; display:flex; justify-content:space-between; }
+    .chart-card-title span { color:hsl(215,14%,46%); font-weight:400; }
+    .chart-svg { width:100%; height:52px; }
+
+    /* ====================== APP SCREEN: UPLOAD ====================== */
+    .screen-upload { background:hsl(210,20%,98%); }
+
+    .upload-content { padding:10px; }
+    .upload-title { font-family:'Bricolage Grotesque',sans-serif; font-size:0.85rem; font-weight:800; color:hsl(220,20%,10%); margin-bottom:10px; }
+
+    /* Tabs — from Tabs component */
+    .app-tabs { display:flex; background:hsl(210,20%,95%); border-radius:9px; padding:3px; margin-bottom:10px; gap:2px; }
+    .app-tab { flex:1; border:none; border-radius:7px; padding:5px; font-family:'Plus Jakarta Sans',sans-serif; font-size:0.45rem; font-weight:600; cursor:default; display:flex; align-items:center; justify-content:center; gap:3px; }
+    .app-tab svg { width:9px; height:9px; }
+    .app-tab.active { background:white; color:hsl(220,20%,10%); box-shadow:0 1px 3px rgba(0,0,0,0.08); }
+    .app-tab.inactive { background:transparent; color:hsl(215,14%,46%); }
+
+    .upload-card { background:white; border:1px solid hsl(214,20%,90%); border-radius:11px; padding:12px; }
+
+    /* Drop zone */
+    .drop-zone { border:2px dashed hsl(217,91%,55%,0.35); background:hsl(217,91%,55%,0.04); border-radius:14px; padding:18px 10px; display:flex; flex-direction:column; align-items:center; gap:7px; margin-bottom:10px; }
+    .drop-icon-wrap { width:38px; height:38px; background:hsl(214,80%,93%); border-radius:11px; display:flex; align-items:center; justify-content:center; }
+    .drop-icon-wrap svg { width:18px; height:18px; color:hsl(217,91%,55%); }
+    .drop-main { font-size:0.5rem; font-weight:600; color:hsl(220,20%,10%); text-align:center; }
+    .drop-sub { font-size:0.42rem; color:hsl(215,14%,46%); text-align:center; }
+    .drop-ai { display:flex; align-items:center; gap:3px; font-size:0.42rem; color:hsl(217,91%,55%); }
+    .drop-ai svg { width:9px; height:9px; }
+
+    /* File entry */
+    .file-entry { display:flex; align-items:center; gap:7px; background:hsl(210,20%,95%); border:1px solid hsl(214,20%,90%); border-radius:9px; padding:6px 9px; margin-bottom:8px; }
+    .file-entry svg { width:13px; height:13px; color:hsl(217,91%,55%); flex-shrink:0; }
+    .file-name { font-size:0.45rem; font-weight:500; color:hsl(220,20%,10%); flex:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .file-check svg { width:12px; height:12px; color:hsl(152,60%,40%); }
+
+    /* Field groups */
+    .field-lbl { font-size:0.42rem; color:hsl(215,14%,46%); font-weight:600; margin-bottom:3px; }
+    .field-input { height:26px; background:hsl(210,20%,98%); border:1px solid hsl(214,20%,90%); border-radius:8px; padding:0 8px; font-size:0.45rem; color:hsl(220,20%,10%); width:100%; margin-bottom:7px; display:flex; align-items:center; }
+
+    /* Pill type selector */
+    .pill-row { display:flex; gap:4px; flex-wrap:wrap; margin-bottom:10px; }
+    .pill { border-radius:7px; padding:4px 8px; font-size:0.42rem; font-weight:600; border:1px solid; }
+    .pill.active   { border-color:hsl(217,91%,55%,0.5); background:hsl(214,80%,93%); color:hsl(217,91%,55%); }
+    .pill.inactive { border-color:hsl(214,20%,90%); background:white; color:hsl(215,14%,46%); }
+
+    /* Progress */
+    .progress-wrap { background:hsl(214,80%,93%); border:1px solid hsl(217,91%,55%,0.18); border-radius:10px; padding:8px; margin-bottom:8px; }
+    .progress-header { display:flex; align-items:center; gap:5px; font-size:0.42rem; color:hsl(220,20%,10%); margin-bottom:5px; }
+    .progress-header svg { width:10px; height:10px; color:hsl(217,91%,55%); }
+    .progress-bar-track { height:5px; background:hsl(217,91%,55%,0.2); border-radius:3px; overflow:hidden; }
+    .progress-bar-fill  { height:100%; background:hsl(217,91%,55%); border-radius:3px; width:62%; }
+
+    /* Extract button */
+    .extract-btn { width:100%; height:34px; background:hsl(217,91%,55%); border:none; border-radius:10px; color:white; font-family:'Bricolage Grotesque',sans-serif; font-size:0.55rem; font-weight:700; display:flex; align-items:center; justify-content:center; gap:5px; margin-top:6px; }
+    .extract-btn svg { width:11px; height:11px; }
+
+    /* ===== LOGOS BAND ===== */
+    .logos-band { background:white; border-top:1px solid var(--gray-100); border-bottom:1px solid var(--gray-100); padding:28px 48px; text-align:center; }
+    .logos-band p { font-size:0.72rem; color:var(--gray-400); font-weight:500; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:18px; }
+    .logos-row { display:flex; justify-content:center; align-items:center; gap:44px; flex-wrap:wrap; }
+    .logo-pill { display:flex; align-items:center; gap:8px; font-size:0.83rem; font-weight:700; color:var(--gray-400); letter-spacing:-0.02em; }
+    .logo-pill span { font-size:1.1rem; }
+
+    /* ===== HOW IT WORKS ===== */
+    .section { padding:100px 48px; max-width:1240px; margin:0 auto; }
+    .section-eyebrow { font-size:0.72rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--blue-500); margin-bottom:14px; }
+    .section-title { font-family:'Bricolage Grotesque',sans-serif; font-size:clamp(1.8rem,3vw,2.7rem); font-weight:800; letter-spacing:-0.025em; color:var(--blue-900); line-height:1.12; margin-bottom:16px; }
+    .section-sub { font-size:1rem; line-height:1.75; color:var(--gray-600); max-width:520px; }
+    .two-col { display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:end; }
+    .steps-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:64px; }
+    .step-card { background:var(--gray-50); border:1px solid var(--gray-200); border-radius:16px; padding:36px 30px; transition:box-shadow 0.3s,transform 0.3s,border-color 0.3s; }
+    .step-card:hover { box-shadow:0 12px 40px rgba(37,99,235,0.1); border-color:var(--blue-300); transform:translateY(-4px); }
+    .step-number { width:36px; height:36px; background:var(--blue-500); color:white; border-radius:10px; display:flex; align-items:center; justify-content:center; font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:0.85rem; margin-bottom:20px; }
+    .step-card h3 { font-family:'Bricolage Grotesque',sans-serif; font-size:1.1rem; font-weight:700; color:var(--blue-900); margin-bottom:10px; }
+    .step-card p { font-size:0.875rem; line-height:1.75; color:var(--gray-600); }
+
+    /* ===== FEATURES ===== */
+    .features-bg { background:var(--blue-900); padding:100px 0; }
+    .features-inner { max-width:1240px; margin:0 auto; padding:0 48px; }
+    .features-header { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:end; margin-bottom:64px; }
+    .features-bg .section-eyebrow { color:var(--blue-300); }
+    .features-bg .section-title { color:white; }
+    .features-bg .section-sub { color:var(--blue-300); }
+    .feature-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; }
+    .feat { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.07); padding:36px 30px; transition:background 0.3s; }
+    .feat:hover { background:rgba(255,255,255,0.08); }
+    .feat-icon { width:44px; height:44px; background:rgba(59,130,246,0.2); border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1.2rem; margin-bottom:20px; }
+    .feat h3 { font-family:'Bricolage Grotesque',sans-serif; font-size:1rem; font-weight:700; color:white; margin-bottom:10px; }
+    .feat p { font-size:0.83rem; line-height:1.75; color:rgba(147,197,253,0.8); }
+
+    /* ===== SECURITY ===== */
+    .security-section { padding:80px 48px; max-width:1240px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
+    .security-items { display:flex; flex-direction:column; gap:16px; margin-top:40px; }
+    .sec-item { display:flex; align-items:flex-start; gap:14px; }
+    .sec-icon { width:36px; height:36px; background:var(--blue-50); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:1rem; flex-shrink:0; margin-top:2px; }
+    .sec-title { font-weight:700; font-size:0.9rem; color:var(--blue-900); margin-bottom:3px; }
+    .sec-desc { font-size:0.8rem; line-height:1.6; color:var(--gray-600); }
+    .security-visual { background:linear-gradient(135deg,var(--blue-50),var(--blue-100)); border-radius:20px; padding:40px; text-align:center; border:1px solid #BFDBFE; }
+    .shield-big { font-size:5rem; margin-bottom:16px; }
+    .security-visual h3 { font-family:'Bricolage Grotesque',sans-serif; font-size:1.2rem; font-weight:700; color:var(--blue-900); margin-bottom:8px; }
+    .security-visual p { font-size:0.82rem; color:var(--gray-600); line-height:1.6; }
+    .lgpd-badge { display:inline-flex; align-items:center; gap:6px; background:white; border:1px solid #BFDBFE; border-radius:8px; padding:8px 16px; font-size:0.78rem; font-weight:700; color:var(--blue-700); margin-top:20px; }
+
+    /* ===== CTA ===== */
+    .cta-section { background:linear-gradient(135deg,var(--blue-600),var(--blue-800)); padding:100px 48px; text-align:center; }
+    .cta-section h2 { font-family:'Bricolage Grotesque',sans-serif; font-size:clamp(2rem,4vw,3.2rem); font-weight:800; color:white; letter-spacing:-0.025em; margin-bottom:16px; }
+    .cta-section > p { color:rgba(191,219,254,0.9); font-size:1rem; margin-bottom:40px; }
+    .cta-form { display:flex; gap:10px; justify-content:center; max-width:460px; margin:0 auto 16px; }
+    .cta-form input { flex:1; padding:14px 18px; border-radius:10px; border:none; font-family:inherit; font-size:0.9rem; background:rgba(255,255,255,0.14); color:white; outline:none; }
+    .cta-form input::placeholder { color:rgba(255,255,255,0.5); }
+    .btn-white { background:white; color:var(--blue-600); border:none; border-radius:10px; padding:14px 24px; font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:0.9rem; cursor:pointer; white-space:nowrap; transition:background 0.2s; box-shadow:0 4px 14px rgba(0,0,0,0.18); }
+    .btn-white:hover { background:var(--blue-50); }
+    .cta-note { font-size:0.78rem; color:rgba(191,219,254,0.7); }
+    .cta-success { display:none; color:#6ee7b7; font-size:0.88rem; font-weight:600; margin-top:16px; }
+
+    /* ===== FOOTER ===== */
+    footer { background:var(--blue-900); padding:32px 48px; display:flex; justify-content:space-between; align-items:center; }
+    footer .nav-logo { color:white; }
+    footer .nav-logo span { color:var(--blue-300); }
+    .footer-right { text-align:right; }
+    footer p { font-size:0.72rem; color:rgba(147,197,253,0.6); line-height:1.6; }
+
+    /* ===== REVEAL ===== */
+    .reveal { opacity:0; transform:translateY(24px); transition:opacity 0.65s ease,transform 0.65s ease; }
+    .reveal.visible { opacity:1; transform:none; }
+
+    /* ===== RESPONSIVE ===== */
+    @media(max-width:900px){
+      nav { padding:0 24px; }
+      .nav-links { display:none; }
+      .hero-inner { grid-template-columns:1fr; gap:48px; padding:60px 24px; }
+      .hero-phones { height:420px; }
+      .phone-main { width:210px; }
+      .phone-left,.phone-right { width:170px; }
+      .two-col { grid-template-columns:1fr; gap:24px; }
+      .steps-grid { grid-template-columns:1fr; }
+      .feature-grid { grid-template-columns:1fr; }
+      .features-header { grid-template-columns:1fr; gap:24px; }
+      .security-section { grid-template-columns:1fr; gap:48px; padding:60px 24px; }
+      .section { padding:60px 24px; }
+      .cta-section { padding:80px 24px; }
+      .cta-form { flex-direction:column; }
+      footer { flex-direction:column; gap:16px; padding:24px; }
+      .footer-right { text-align:center; }
+      .logos-band { padding:24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">folio<span>.</span>ia</div>
+  <ul class="nav-links">
+    <li><a href="#como-funciona">Como funciona</a></li>
+    <li><a href="#exames">Exames</a></li>
+    <li><a href="#seguranca">Segurança</a></li>
+    <li><a href="#lista" class="nav-cta">Entrar na lista</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+
+    <!-- LEFT: copy + form -->
+    <div class="hero-content">
+      <div class="hero-badge">
+        <div class="dot"></div>
+        Beta — Lista de espera aberta
+      </div>
+      <h1>Entenda seus<br/><span class="hl">exames de saúde</span><br/>com IA</h1>
+      <p class="hero-desc">
+        Suba o PDF ou foto do seu exame. A IA interpreta os resultados em linguagem simples e rastreia sua evolução ao longo do tempo.
+      </p>
+      <div class="hero-form" id="form-hero">
+        <input type="email" id="email-hero" placeholder="seu@email.com" required/>
+        <button class="btn-primary" onclick="joinWaitlist('email-hero','msg-hero','form-hero')">Entrar na lista →</button>
+      </div>
+      <p class="hero-note">🔒 Gratuito na beta. Sem cartão de crédito.</p>
+      <p class="success-msg" id="msg-hero">✓ Você está na lista! Avisaremos em breve.</p>
+      <p class="error-msg" id="err-hero" style="display:none;font-size:0.78rem;color:#EF4444;margin-top:8px;">Algo deu errado. Tente novamente.</p>
+
+      <div class="hero-trust">
+        <div class="trust-item">
+          <div class="trust-icon">🔒</div>
+          <span>Dados criptografados</span>
+        </div>
+        <div class="trust-sep"></div>
+        <div class="trust-item">
+          <div class="trust-icon">🇧🇷</div>
+          <span>LGPD</span>
+        </div>
+        <div class="trust-sep"></div>
+        <div class="trust-item">
+          <div class="trust-icon">⚡</div>
+          <span>Resultado em segundos</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: 3 phone mockups — pixel-fiel ao app real -->
+    <div class="hero-phones">
+
+      <!-- PHONE LEFT: Upload screen -->
+      <div class="phone phone-left">
+        <div class="phone-island"></div>
+        <div class="screen-upload">
+          <!-- Header -->
+          <div class="app-header">
+            <div class="app-header-logo">
+              <div class="app-logo-mark">
+                <svg fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+              </div>
+              <span class="app-logo-text">Folio</span>
+            </div>
+          </div>
+          <!-- Content -->
+          <div class="upload-content">
+            <div class="upload-title">Enviar Exame</div>
+
+            <!-- Tabs -->
+            <div class="app-tabs">
+              <button class="app-tab active">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+                Enviar
+              </button>
+              <button class="app-tab inactive">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                Erros
+              </button>
+            </div>
+
+            <div class="upload-card">
+              <!-- Drop zone -->
+              <div class="drop-zone">
+                <div class="drop-icon-wrap">
+                  <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+                </div>
+                <div class="drop-main">Toque para selecionar PDF ou foto</div>
+                <div class="drop-ai">
+                  <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 3l14 9-14 9V3z"/></svg>
+                  IA extrai biomarcadores automaticamente
+                </div>
+              </div>
+
+              <!-- File selected -->
+              <div class="file-entry">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                <span class="file-name">hemograma_fleury_mar25.pdf</span>
+                <div class="file-check">
+                  <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </div>
+              </div>
+
+              <!-- Progress -->
+              <div class="progress-wrap">
+                <div class="progress-header">
+                  <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 3l14 9-14 9V3z"/></svg>
+                  IA está extraindo biomarcadores...
+                </div>
+                <div class="progress-bar-track">
+                  <div class="progress-bar-fill"></div>
+                </div>
+              </div>
+
+              <!-- Exam type pills -->
+              <div class="field-lbl">Tipo de Exame</div>
+              <div class="pill-row">
+                <div class="pill active">Exame de Sangue</div>
+                <div class="pill inactive">Bioimpedância</div>
+                <div class="pill inactive">Vista</div>
+              </div>
+
+              <button class="extract-btn">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 3l14 9-14 9V3z"/></svg>
+                Extrair &amp; Revisar
+              </button>
+            </div>
+          </div>
+
+          <!-- Bottom Nav -->
+          <div class="app-bottom-nav">
+            <div class="nav-item inactive"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg><span>Início</span></div>
+            <div class="nav-item inactive"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg><span>Exames</span></div>
+            <div class="nav-item inactive"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg><span>Métricas</span></div>
+            <div class="nav-item active"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg><span>Enviar</span></div>
+            <div class="nav-item inactive"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><circle cx="12" cy="12" r="3"/></svg><span>Config</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PHONE CENTER: Home Page -->
+      <div class="phone phone-main">
+        <div class="phone-island"></div>
+        <div class="screen-home">
+          <!-- Header -->
+          <div class="app-header">
+            <div class="app-header-logo">
+              <div class="app-logo-mark">
+                <svg fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+              </div>
+              <span class="app-logo-text">Folio</span>
+            </div>
+            <div class="app-header-avatar">JT</div>
+          </div>
+
+          <!-- Blue hero band -->
+          <div class="home-hero-band">
+            <div class="home-hero-top">
+              <div>
+                <div class="home-greeting">Bom dia</div>
+                <div class="home-sub">Aqui está o resumo da sua saúde.</div>
+              </div>
+              <div class="home-initials">JT</div>
+            </div>
+            <div class="home-chips">
+              <div class="home-chip">
+                <div class="home-chip-val">7</div>
+                <div class="home-chip-label">exames</div>
+              </div>
+              <div class="home-chip">
+                <div class="home-chip-val warn">2</div>
+                <div class="home-chip-label">atenção</div>
+              </div>
+              <div class="home-chip">
+                <div class="home-chip-val">24</div>
+                <div class="home-chip-label">métricas</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Content -->
+          <div class="home-content">
+            <div class="section-label">Visão Geral</div>
+            <div class="quick-grid">
+              <div class="quick-card">
+                <div class="quick-icon">
+                  <svg fill="none" viewBox="0 0 24 24" stroke="hsl(217,91%,55%)" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+                </div>
+                <div class="quick-label">Enviar Exame</div>
+              </div>
+              <div class="quick-card">
+                <div class="quick-icon">
+                  <svg fill="none" viewBox="0 0 24 24" stroke="hsl(217,91%,55%)" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+                </div>
+                <div class="quick-label">Ver Métricas</div>
+              </div>
+            </div>
+
+            <div class="section-label">Exames Recentes</div>
+            <div class="recent-card">
+              <div class="recent-dot"></div>
+              <div>
+                <div class="recent-name">Exame de Sangue</div>
+                <div class="recent-lab">Fleury · 15 Mar 2025</div>
+              </div>
+              <div class="recent-badge">15 Mar</div>
+            </div>
+            <div class="recent-card">
+              <div class="recent-dot"></div>
+              <div>
+                <div class="recent-name">Bioimpedância</div>
+                <div class="recent-lab">02 Fev 2025</div>
+              </div>
+              <div class="recent-badge">2 Fev</div>
+            </div>
+            <div class="recent-card">
+              <div class="recent-dot"></div>
+              <div>
+                <div class="recent-name">Exame Ocular</div>
+                <div class="recent-lab">20 Jan 2025</div>
+              </div>
+              <div class="recent-badge">20 Jan</div>
+            </div>
+          </div>
+
+          <!-- Bottom Nav -->
+          <div class="app-bottom-nav" style="margin-top:8px">
+            <div class="nav-item active"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg><span>Início</span></div>
+            <div class="nav-item inactive"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg><span>Exames</span></div>
+            <div class="nav-item inactive"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg><span>Métricas</span></div>
+            <div class="nav-item inactive"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg><span>Enviar</span></div>
+            <div class="nav-item inactive"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><circle cx="12" cy="12" r="3"/></svg><span>Config</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PHONE RIGHT: Metrics screen -->
+      <div class="phone phone-right">
+        <div class="phone-island"></div>
+        <div class="screen-metrics">
+          <!-- Header -->
+          <div class="app-header">
+            <div class="app-header-logo">
+              <div class="app-logo-mark">
+                <svg fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+              </div>
+              <span class="app-logo-text">Folio</span>
+            </div>
+          </div>
+
+          <!-- Metrics content -->
+          <div class="metrics-content">
+            <div class="metrics-title">Métricas</div>
+
+            <!-- Stats strip -->
+            <div class="stats-grid">
+              <div class="stat-card">
+                <svg fill="none" viewBox="0 0 24 24" stroke="hsl(217,91%,55%)" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+                <div class="stat-num">24</div>
+                <div class="stat-lbl">Rastreados</div>
+              </div>
+              <div class="stat-card">
+                <svg fill="none" viewBox="0 0 24 24" stroke="hsl(152,60%,40%)" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <div class="stat-num">22</div>
+                <div class="stat-lbl">Normal</div>
+              </div>
+              <div class="stat-card">
+                <svg fill="none" viewBox="0 0 24 24" stroke="hsl(38,92%,50%)" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                <div class="stat-num">2</div>
+                <div class="stat-lbl">Atenção</div>
+              </div>
+            </div>
+
+            <!-- Category: Hemograma -->
+            <div class="cat-divider">
+              <div class="cat-line"></div>
+              <div class="cat-name">Hemograma</div>
+              <div class="cat-line"></div>
+            </div>
+
+            <div class="bio-grid">
+              <!-- Hemoglobina -->
+              <div class="bio-card">
+                <div class="bio-top">
+                  <div class="bio-name">Hemoglobina</div>
+                  <div class="bio-badge ok">Normal</div>
+                </div>
+                <div><span class="bio-value">14.2</span> <span class="bio-unit">g/dL</span></div>
+                <div class="ref-bar-track">
+                  <div class="ref-bar-normal" style="left:20%;width:60%"></div>
+                  <div class="ref-bar-dot ok" style="left:68%"></div>
+                </div>
+                <div class="bio-footer">
+                  <div class="bio-trend">↑ +4.2%</div>
+                  <div class="bio-date">15 Mar</div>
+                </div>
+              </div>
+              <!-- Glicose -->
+              <div class="bio-card">
+                <div class="bio-top">
+                  <div class="bio-name">Glicose</div>
+                  <div class="bio-badge warn">Alto</div>
+                </div>
+                <div><span class="bio-value">108</span> <span class="bio-unit">mg/dL</span></div>
+                <div class="ref-bar-track">
+                  <div class="ref-bar-normal" style="left:15%;width:55%"></div>
+                  <div class="ref-bar-dot warn" style="left:80%"></div>
+                </div>
+                <div class="bio-footer">
+                  <div class="bio-trend">↑ +8.0%</div>
+                  <div class="bio-date">15 Mar</div>
+                </div>
+              </div>
+              <!-- Ferritina -->
+              <div class="bio-card">
+                <div class="bio-top">
+                  <div class="bio-name">Ferritina</div>
+                  <div class="bio-badge ok">Normal</div>
+                </div>
+                <div><span class="bio-value">67</span> <span class="bio-unit">ng/mL</span></div>
+                <div class="ref-bar-track">
+                  <div class="ref-bar-normal" style="left:18%;width:58%"></div>
+                  <div class="ref-bar-dot ok" style="left:55%"></div>
+                </div>
+                <div class="bio-footer">
+                  <div class="bio-trend">1ª leitura</div>
+                  <div class="bio-date">15 Mar</div>
+                </div>
+              </div>
+              <!-- Vitamina D -->
+              <div class="bio-card">
+                <div class="bio-top">
+                  <div class="bio-name">Vitamina D</div>
+                  <div class="bio-badge ok">Normal</div>
+                </div>
+                <div><span class="bio-value">32</span> <span class="bio-unit">ng/mL</span></div>
+                <div class="ref-bar-track">
+                  <div class="ref-bar-normal" style="left:20%;width:60%"></div>
+                  <div class="ref-bar-dot ok" style="left:52%"></div>
+                </div>
+                <div class="bio-footer">
+                  <div class="bio-trend">↑ +14.3%</div>
+                  <div class="bio-date">15 Mar</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Trend chart card -->
+            <div class="chart-card">
+              <div class="chart-card-title">
+                Hemoglobina <span>(g/dL)</span>
+              </div>
+              <svg class="chart-svg" viewBox="0 0 170 52" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="hsl(217,91%,55%)" stop-opacity="0.22"/>
+                    <stop offset="100%" stop-color="hsl(217,91%,55%)" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <!-- grid -->
+                <line x1="0" y1="13" x2="170" y2="13" stroke="hsl(214,20%,90%)" stroke-width="0.6"/>
+                <line x1="0" y1="26" x2="170" y2="26" stroke="hsl(214,20%,90%)" stroke-width="0.6"/>
+                <line x1="0" y1="39" x2="170" y2="39" stroke="hsl(214,20%,90%)" stroke-width="0.6"/>
+                <!-- ref max -->
+                <line x1="0" y1="10" x2="170" y2="10" stroke="hsl(0,72%,51%)" stroke-width="0.7" stroke-dasharray="3 3"/>
+                <!-- ref min -->
+                <line x1="0" y1="38" x2="170" y2="38" stroke="hsl(38,92%,50%)" stroke-width="0.7" stroke-dasharray="3 3"/>
+                <!-- area fill -->
+                <path d="M0,38 C20,34 40,28 68,22 C96,16 120,14 145,12 C158,11 165,10 170,9 L170,52 L0,52 Z" fill="url(#g1)"/>
+                <!-- line -->
+                <path d="M0,38 C20,34 40,28 68,22 C96,16 120,14 145,12 C158,11 165,10 170,9" fill="none" stroke="hsl(217,91%,55%)" stroke-width="1.8" stroke-linecap="round"/>
+                <!-- dots -->
+                <circle cx="0"   cy="38" r="2.5" fill="white" stroke="hsl(217,91%,55%)" stroke-width="1.5"/>
+                <circle cx="34"  cy="30" r="2.5" fill="white" stroke="hsl(217,91%,55%)" stroke-width="1.5"/>
+                <circle cx="68"  cy="22" r="2.5" fill="white" stroke="hsl(217,91%,55%)" stroke-width="1.5"/>
+                <circle cx="102" cy="15" r="2.5" fill="white" stroke="hsl(217,91%,55%)" stroke-width="1.5"/>
+                <circle cx="136" cy="12" r="2.5" fill="white" stroke="hsl(217,91%,55%)" stroke-width="1.5"/>
+                <circle cx="170" cy="9"  r="3.5" fill="hsl(217,91%,55%)" stroke="white" stroke-width="1.5"/>
+              </svg>
+              <div style="display:flex;justify-content:space-between;margin-top:4px">
+                <span style="font-size:0.36rem;color:hsl(215,14%,46%)">Out</span>
+                <span style="font-size:0.36rem;color:hsl(215,14%,46%)">Nov</span>
+                <span style="font-size:0.36rem;color:hsl(215,14%,46%)">Dez</span>
+                <span style="font-size:0.36rem;color:hsl(215,14%,46%)">Jan</span>
+                <span style="font-size:0.36rem;color:hsl(215,14%,46%)">Fev</span>
+                <span style="font-size:0.36rem;color:hsl(215,14%,46%)">Mar</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Bottom Nav -->
+          <div class="app-bottom-nav" style="margin-top:6px">
+            <div class="nav-item inactive"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg><span>Início</span></div>
+            <div class="nav-item inactive"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg><span>Exames</span></div>
+            <div class="nav-item active"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg><span>Métricas</span></div>
+            <div class="nav-item inactive"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg><span>Enviar</span></div>
+            <div class="nav-item inactive"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/></svg><span>Config</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /hero-phones -->
+  </div><!-- /hero-inner -->
+</section>
+
+<!-- LOGOS BAND -->
+<div class="logos-band">
+  <p>Construído com tecnologias confiáveis</p>
+  <div class="logos-row">
+    <div class="logo-pill"><span>🤖</span> OpenAI</div>
+    <div class="logo-pill"><span>🗄</span> Supabase</div>
+    <div class="logo-pill"><span>⚡</span> Lovable</div>
+    <div class="logo-pill"><span>🇧🇷</span> LGPD</div>
+    <div class="logo-pill"><span>🔐</span> TLS/AES-256</div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section id="como-funciona">
+  <div class="section reveal">
+    <div class="two-col">
+      <div>
+        <div class="section-eyebrow">Como funciona</div>
+        <h2 class="section-title">Simples como tirar uma foto</h2>
+      </div>
+      <p class="section-sub">Em 3 passos você tem uma análise completa dos seus exames e começa a construir seu histórico de saúde.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-number">1</div>
+        <h3>Faça o upload do exame</h3>
+        <p>PDF do laboratório, foto do resultado ou imagem escaneada. O Folio aceita qualquer formato dos principais labs do Brasil.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">2</div>
+        <h3>A IA interpreta os dados</h3>
+        <p>Em segundos, os biomarcadores são extraídos e explicados em linguagem clara — sem jargão clínico.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">3</div>
+        <h3>Acompanhe sua evolução</h3>
+        <p>Cada novo exame vira um ponto no seu histórico. Veja tendências em gráficos com linha de referência mín/máx.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<div class="features-bg">
+  <div class="features-inner">
+    <div class="features-header reveal">
+      <div>
+        <div class="section-eyebrow">Funcionalidades</div>
+        <h2 class="section-title">Tudo que você precisa para entender sua saúde</h2>
+      </div>
+      <p class="section-sub">De atletas a pessoas com condições crônicas — o Folio transforma dados clínicos em insights práticos.</p>
+    </div>
+    <div class="feature-grid reveal">
+      <div class="feat"><div class="feat-icon">🧠</div><h3>Interpretação por IA</h3><p>Cada métrica é explicada com contexto — o que significa, se está dentro do range e o que pode influenciar.</p></div>
+      <div class="feat"><div class="feat-icon">📈</div><h3>Gráficos de tendência</h3><p>Hemoglobina, glicose, vitaminas — veja a evolução ao longo do tempo com linhas de referência min/max.</p></div>
+      <div class="feat"><div class="feat-icon">📄</div><h3>Qualquer formato</h3><p>PDF do laboratório, foto tirada no celular ou imagem escaneada. A IA lê e extrai automaticamente.</p></div>
+      <div class="feat"><div class="feat-icon">🩸</div><h3>Exame de Sangue</h3><p>Hemograma completo, colesterol, glicose, ferritina, vitaminas e mais de 30 marcadores rastreados por categoria.</p></div>
+      <div class="feat"><div class="feat-icon">📏</div><h3>Bioimpedância</h3><p>IMC, % de gordura, massa muscular, pressão arterial, frequência cardíaca e composição corporal.</p></div>
+      <div class="feat"><div class="feat-icon">👁</div><h3>Exame Ocular</h3><p>Acuidade visual, grau, astigmatismo e pressão intraocular — histórico completo da sua visão.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- SECURITY -->
+<div id="seguranca">
+  <div class="security-section reveal">
+    <div>
+      <div class="section-eyebrow">Segurança & Privacidade</div>
+      <h2 class="section-title">Seus dados de saúde são seus</h2>
+      <div class="security-items">
+        <div class="sec-item"><div class="sec-icon">🔒</div><div><div class="sec-title">Criptografia em trânsito e em repouso</div><div class="sec-desc">TLS em todas as conexões. Dados armazenados com AES-256 via Supabase.</div></div></div>
+        <div class="sec-item"><div class="sec-icon">🛡</div><div><div class="sec-title">Row Level Security (RLS)</div><div class="sec-desc">Políticas de banco que garantem que você acessa apenas seus próprios dados.</div></div></div>
+        <div class="sec-item"><div class="sec-icon">🇧🇷</div><div><div class="sec-title">Conformidade com a LGPD</div><div class="sec-desc">Seus dados nunca são vendidos. Você pode excluir tudo a qualquer momento nas configurações.</div></div></div>
+      </div>
+    </div>
+    <div class="security-visual">
+      <div class="shield-big">🛡️</div>
+      <h3>Privacidade por design</h3>
+      <p>O Folio IA foi construído desde o início com segurança como prioridade — não como afterthought.</p>
+      <div class="lgpd-badge">🇧🇷 Conforme LGPD &nbsp;·&nbsp; Dados no Brasil</div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section" id="lista">
+  <h2>Pronto para entender<br/>seus exames?</h2>
+  <p>Acesso gratuito para os primeiros da lista. Sem cartão de crédito.</p>
+  <div class="cta-form">
+    <input type="email" id="email-cta" placeholder="seu@email.com" required/>
+    <button class="btn-white" onclick="joinWaitlist('email-cta','msg-cta',null)">Quero acesso →</button>
+  </div>
+  <p class="cta-note">Zero spam. Avisamos quando o acesso for liberado.</p>
+  <p class="cta-success" id="msg-cta">✓ Você está na lista! Te avisamos em breve.</p>
+  <p id="err-cta" style="display:none;font-size:0.78rem;color:#93C5FD;margin-top:8px;">Algo deu errado. Tente novamente.</p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="nav-logo">folio<span>.</span>ia</div>
+  <div class="footer-right">
+    <p>© 2025 Folio IA · Rio de Janeiro, Brasil</p>
+    <p>Folio IA não substitui consulta médica. As interpretações são informativas.</p>
+  </div>
+</footer>
+
+<script>
+  const FORMSPREE = 'https://formspree.io/f/mreoajkw';
+
+  // Scroll reveal
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold:0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  async function joinWaitlist(inputId, msgId, formId) {
+    const input = document.getElementById(inputId);
+    const email = input.value.trim();
+    const errId = inputId === 'email-hero' ? 'err-hero' : 'err-cta';
+    const errEl = document.getElementById(errId);
+
+    // Basic validation
+    if (!email || !email.includes('@')) {
+      input.style.border = '1.5px solid #EF4444';
+      input.style.boxShadow = '0 0 0 3px rgba(239,68,68,0.15)';
+      setTimeout(() => { input.style.border = ''; input.style.boxShadow = ''; }, 1400);
+      return;
+    }
+
+    // Disable button during submit
+    const btn = input.nextElementSibling;
+    const originalText = btn.textContent;
+    btn.textContent = 'Aguarde...';
+    btn.disabled = true;
+
+    try {
+      const res = await fetch(FORMSPREE, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ email, source: inputId === 'email-hero' ? 'hero' : 'cta' })
+      });
+
+      if (res.ok) {
+        // Hide form elements, show success
+        input.style.display = 'none';
+        btn.style.display = 'none';
+        if (errEl) errEl.style.display = 'none';
+        document.getElementById(msgId).style.display = 'block';
+
+        // Also hide the note below hero form
+        if (formId === 'form-hero') {
+          const note = document.querySelector('.hero-note');
+          if (note) note.style.display = 'none';
+        }
+      } else {
+        throw new Error('Server error');
+      }
+    } catch(e) {
+      btn.textContent = originalText;
+      btn.disabled = false;
+      if (errEl) errEl.style.display = 'block';
+    }
+  }
+</script>
+</body>
+</html>
