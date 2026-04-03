@@ -377,10 +377,28 @@
     @media(max-width:900px){
       nav { padding:0 24px; }
       .nav-links { display:none; }
-      .hero-inner { grid-template-columns:1fr; gap:48px; padding:60px 24px; }
-      .hero-phones { height:420px; }
-      .phone-main { width:210px; }
-      .phone-left,.phone-right { width:170px; }
+
+      /* Hero: single column, phones hidden on mobile */
+      .hero { min-height:auto; padding-bottom:60px; }
+      .hero-inner {
+        grid-template-columns:1fr;
+        gap:0;
+        padding:48px 24px 0;
+      }
+      .hero-phones { display:none; }
+
+      /* Hero text tighter on mobile */
+      .hero h1 { font-size:2.4rem; }
+      .hero-desc { font-size:0.95rem; }
+      .hero-trust { flex-wrap:wrap; gap:12px; }
+      .trust-sep { display:none; }
+
+      /* Hero form stacked on very small screens */
+      .hero-form { flex-direction:column; }
+      .hero-form input { border-radius:10px; }
+      .btn-primary { border-radius:10px; text-align:center; }
+
+      /* Sections */
       .two-col { grid-template-columns:1fr; gap:24px; }
       .steps-grid { grid-template-columns:1fr; }
       .feature-grid { grid-template-columns:1fr; }
@@ -392,6 +410,13 @@
       footer { flex-direction:column; gap:16px; padding:24px; }
       .footer-right { text-align:center; }
       .logos-band { padding:24px; }
+      .logos-row { gap:24px; }
+    }
+
+    @media(max-width:480px){
+      .hero h1 { font-size:2rem; }
+      .hero-badge { font-size:0.7rem; }
+      .section-title { font-size:1.6rem; }
     }
   </style>
 </head>
