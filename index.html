@@ -22,6 +22,9 @@
   <meta name="twitter:image" content="https://folio-ia-landing.vercel.app/og-image.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Bricolage+Grotesque:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Cloudflare Turnstile — CAPTCHA for waitlist forms -->
+  <!-- Get your site key at: https://dash.cloudflare.com > Turnstile -->
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -451,6 +454,8 @@
         <input type="email" id="email-hero" placeholder="seu@email.com" required/>
         <button class="btn-primary" onclick="joinWaitlist('email-hero','msg-hero','form-hero')">Entrar na lista →</button>
       </div>
+      <!-- Turnstile CAPTCHA — replace 0x4AAAAAAC68PdM4SGMiW5QI with your key from dash.cloudflare.com/turnstile -->
+      <div class="cf-turnstile" data-sitekey="0x4AAAAAAC68PdM4SGMiW5QI" data-callback="onTurnstileHero" id="turnstile-hero" style="margin-top:8px;"></div>
       <p class="hero-note">🔒 Gratuito na beta. Sem cartão de crédito. Ao entrar na lista, você concorda com nossa <a href="/privacy-policy.html" style="color:var(--gray-400);text-decoration:underline;text-underline-offset:2px;">Política de Privacidade</a> e <a href="/terms-of-service.html" style="color:var(--gray-400);text-decoration:underline;text-underline-offset:2px;">Termos de Uso</a>.</p>
       <p class="success-msg" id="msg-hero">✓ Você está na lista! Avisaremos em breve.</p>
       <p class="error-msg" id="err-hero" style="display:none;font-size:0.78rem;color:#EF4444;margin-top:8px;">Algo deu errado. Tente novamente.</p>
@@ -922,6 +927,8 @@
     <input type="email" id="email-cta" placeholder="seu@email.com" required/>
     <button class="btn-white" onclick="joinWaitlist('email-cta','msg-cta',null)">Quero acesso →</button>
   </div>
+  <!-- Turnstile CAPTCHA — replace 0x4AAAAAAC68PdM4SGMiW5QI with your key from dash.cloudflare.com/turnstile -->
+  <div class="cf-turnstile" data-sitekey="0x4AAAAAAC68PdM4SGMiW5QI" data-callback="onTurnstileCta" id="turnstile-cta" style="margin-top:8px;"></div>
   <p class="cta-note">Zero spam. Avisamos quando o acesso for liberado.</p>
   <p class="cta-success" id="msg-cta">✓ Você está na lista! Te avisamos em breve.</p>
   <p id="err-cta" style="display:none;font-size:0.78rem;color:#93C5FD;margin-top:8px;">Algo deu errado. Tente novamente.</p>
@@ -944,6 +951,11 @@
 <script>
   const FORMSPREE = 'https://formspree.io/f/mreoajkw';
 
+  // Turnstile token storage — populated by widget callbacks
+  let turnstileTokens = { hero: null, cta: null };
+  function onTurnstileHero(token) { turnstileTokens.hero = token; }
+  function onTurnstileCta(token) { turnstileTokens.cta = token; }
+
   // Scroll reveal
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
@@ -953,14 +965,23 @@
   async function joinWaitlist(inputId, msgId, formId) {
     const input = document.getElementById(inputId);
     const email = input.value.trim();
-    const errId = inputId === 'email-hero' ? 'err-hero' : 'err-cta';
+    const isHero = inputId === 'email-hero';
+    const errId = isHero ? 'err-hero' : 'err-cta';
     const errEl = document.getElementById(errId);
 
-    // Basic validation
-    if (!email || !email.includes('@')) {
+    // Email validation — RFC 5322 simplified pattern
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || !emailPattern.test(email)) {
       input.style.border = '1.5px solid #EF4444';
       input.style.boxShadow = '0 0 0 3px rgba(239,68,68,0.15)';
       setTimeout(() => { input.style.border = ''; input.style.boxShadow = ''; }, 1400);
+      return;
+    }
+
+    // Require Turnstile token before submitting
+    const turnstileToken = isHero ? turnstileTokens.hero : turnstileTokens.cta;
+    if (!turnstileToken) {
+      if (errEl) { errEl.textContent = 'Complete a verificação acima antes de enviar.'; errEl.style.display = 'block'; }
       return;
     }
 
@@ -974,13 +995,15 @@
       const res = await fetch(FORMSPREE, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({ email, source: inputId === 'email-hero' ? 'hero' : 'cta' })
+        body: JSON.stringify({ email, source: isHero ? 'hero' : 'cta', 'cf-turnstile-response': turnstileToken })
       });
 
       if (res.ok) {
         // Hide form elements, show success
         input.style.display = 'none';
         btn.style.display = 'none';
+        const turnstileEl = document.getElementById(isHero ? 'turnstile-hero' : 'turnstile-cta');
+        if (turnstileEl) turnstileEl.style.display = 'none';
         if (errEl) errEl.style.display = 'none';
         document.getElementById(msgId).style.display = 'block';
 
@@ -995,7 +1018,10 @@
     } catch(e) {
       btn.textContent = originalText;
       btn.disabled = false;
-      if (errEl) errEl.style.display = 'block';
+      // Reset Turnstile widget so user can retry
+      if (window.turnstile) { window.turnstile.reset(); }
+      if (isHero) { turnstileTokens.hero = null; } else { turnstileTokens.cta = null; }
+      if (errEl) { errEl.textContent = 'Algo deu errado. Tente novamente.'; errEl.style.display = 'block'; }
     }
   }
 </script>
