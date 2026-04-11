@@ -112,11 +112,11 @@
       background:white; border:1px solid #BFDBFE; border-radius:100px;
       padding:6px 14px; font-size:0.75rem; font-weight:600; color:var(--blue-600); margin-bottom:28px;
     }
-    .hero-badge .dot { width:7px; height:7px; border-radius:50%; background:var(--accent-teal); animation:pulse 2s ease infinite; }
+    .hero-badge .dot { width:7px; height:7px; border-radius:50%; background:var(--blue-400); animation:pulse 2s ease infinite; }
     @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(0.85)} }
-    .hero h1 { font-family:'Bricolage Grotesque',sans-serif; font-size:clamp(2.4rem,4.5vw,3.7rem); font-weight:800; line-height:1.07; letter-spacing:-0.03em; color:var(--blue-900); margin-bottom:24px; }
+    .hero h1 { font-family:'Bricolage Grotesque',sans-serif; font-size:clamp(2.4rem,4.5vw,3.7rem); font-weight:800; line-height:1.07; letter-spacing:-0.03em; color:var(--blue-900); margin-bottom:20px; }
     .hero h1 .hl { color:var(--blue-500); }
-    .hero-desc { font-size:1.05rem; line-height:1.75; color:var(--gray-600); margin-bottom:40px; max-width:480px; }
+    .hero-desc { font-size:1.15rem; line-height:1.6; color:var(--gray-600); margin-bottom:36px; max-width:480px; font-weight:500; }
     .hero-form { display:flex; gap:10px; max-width:460px; margin-bottom:14px; }
     .hero-form input { flex:1; padding:14px 18px; border:1.5px solid var(--gray-200); border-radius:10px; font-family:inherit; font-size:0.9rem; color:var(--gray-800); background:white; outline:none; transition:border-color 0.2s,box-shadow 0.2s; }
     .hero-form input:focus { border-color:var(--blue-400); box-shadow:0 0 0 3px rgba(59,130,246,0.12); }
@@ -125,7 +125,7 @@
     .btn-primary:hover { background:var(--blue-600); }
     .btn-primary:active { transform:scale(0.98); }
     .hero-note { font-size:0.78rem; color:var(--gray-400); }
-    .success-msg { display:none; font-size:0.85rem; font-weight:600; color:var(--accent-teal); margin-top:14px; }
+    .success-msg { display:none; font-size:0.85rem; font-weight:600; color:var(--blue-500); margin-top:14px; }
     .hero-trust { display:flex; align-items:center; gap:18px; margin-top:36px; }
     .trust-item { display:flex; align-items:center; gap:8px; font-size:0.78rem; font-weight:500; color:var(--gray-600); }
     .trust-icon { width:28px; height:28px; background:white; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:0.9rem; box-shadow:0 1px 4px rgba(0,0,0,0.08); }
@@ -372,6 +372,63 @@
     .footer-right { text-align:right; }
     footer p { font-size:0.72rem; color:rgba(147,197,253,0.6); line-height:1.6; }
 
+    /* ===== SOCIAL COUNTER ===== */
+    .social-counter {
+      margin-top: 16px;
+      font-size: 0.78rem;
+      color: var(--gray-400);
+      font-weight: 400;
+      letter-spacing: 0.01em;
+    }
+
+    /* ===== DEMO SECTION ===== */
+    .demo-section { background: var(--gray-50); padding: 80px 48px; border-top: 1px solid var(--gray-100); border-bottom: 1px solid var(--gray-100); }
+    .demo-inner { max-width: 820px; margin: 0 auto; }
+    .demo-frame {
+      background: white;
+      border: 1px solid var(--gray-200);
+      border-radius: 20px;
+      padding: 48px 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+    }
+    .demo-steps {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      width: 100%;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .demo-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .demo-step-icon {
+      width: 56px; height: 56px;
+      background: var(--blue-50);
+      border-radius: 14px;
+      border: 1px solid #BFDBFE;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .demo-step-icon svg { width: 24px; height: 24px; color: var(--blue-500); }
+    .demo-step-label { font-size: 0.82rem; font-weight: 600; color: var(--gray-600); white-space: nowrap; }
+    .demo-arrow { font-size: 1.2rem; color: var(--gray-200); flex-shrink: 0; }
+    .demo-coming-soon {
+      font-size: 0.8rem;
+      color: var(--gray-400);
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      border: 1px dashed var(--gray-200);
+      border-radius: 8px;
+      padding: 8px 20px;
+    }
+
     /* ===== REVEAL ===== */
     .reveal { opacity:0; transform:translateY(24px); transition:opacity 0.65s ease,transform 0.65s ease; }
     .reveal.visible { opacity:1; transform:none; }
@@ -414,6 +471,17 @@
       .footer-right { text-align:center; }
       .logos-band { padding:24px; }
       .logos-row { gap:24px; }
+
+      /* Demo section */
+      .demo-section { padding:60px 24px; }
+      .demo-frame { padding:32px 20px; gap:24px; }
+      .demo-steps { gap:12px; }
+      .demo-arrow { display:none; }
+      .demo-step { flex-direction:row; gap:12px; width:100%; justify-content:flex-start; }
+      .demo-step-label { white-space:normal; text-align:left; }
+
+      /* Social counter */
+      .social-counter { font-size:0.75rem; }
     }
 
     @media(max-width:480px){
@@ -446,13 +514,13 @@
         <div class="dot"></div>
         Beta — Lista de espera aberta
       </div>
-      <h1>Seu arquivo<br/>de <span class="hl">saúde</span>,<br/>organizado.</h1>
+      <h1>Onde está<br/>seu último<br/><span class="hl">exame?</span></h1>
       <p class="hero-desc">
-        Folio é o lugar onde seus exames ficam salvos, organizados e acessíveis — para você e para o seu médico. Sem diagnósticos, sem interpretações médicas. Só organização.
+        Suba um exame, veja tudo organizado em segundos.
       </p>
       <div class="hero-form" id="form-hero">
         <input type="email" id="email-hero" placeholder="seu@email.com" required/>
-        <button class="btn-primary" onclick="joinWaitlist('email-hero','msg-hero','form-hero')">Entrar na lista →</button>
+        <button class="btn-primary" onclick="joinWaitlist('email-hero','msg-hero','form-hero')">Entrar na lista de espera →</button>
       </div>
       <!-- Turnstile CAPTCHA — replace 0x4AAAAAAC68PdM4SGMiW5QI with your key from dash.cloudflare.com/turnstile -->
       <div class="cf-turnstile" data-sitekey="0x4AAAAAAC68PdM4SGMiW5QI" data-callback="onTurnstileHero" id="turnstile-hero" style="margin-top:8px;"></div>
@@ -476,6 +544,7 @@
           <span>Resultado em segundos</span>
         </div>
       </div>
+      <p class="social-counter">47 pessoas já na lista de espera</p>
     </div>
 
     <!-- RIGHT: 3 phone mockups — pixel-fiel ao app real -->
@@ -834,6 +903,39 @@
     </div><!-- /hero-phones -->
   </div><!-- /hero-inner -->
 </section>
+
+<!-- DEMO -->
+<div class="demo-section">
+  <div class="demo-inner reveal">
+    <p class="section-eyebrow" style="text-align:center;margin-bottom:20px;">Veja em ação</p>
+    <h2 class="section-title" style="text-align:center;margin-bottom:40px;">Upload → extração → gráfico</h2>
+    <div class="demo-frame">
+      <div class="demo-steps">
+        <div class="demo-step">
+          <div class="demo-step-icon">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+          </div>
+          <span class="demo-step-label">1. Suba o exame</span>
+        </div>
+        <div class="demo-arrow">→</div>
+        <div class="demo-step">
+          <div class="demo-step-icon">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 3l14 9-14 9V3z"/></svg>
+          </div>
+          <span class="demo-step-label">2. IA extrai os dados</span>
+        </div>
+        <div class="demo-arrow">→</div>
+        <div class="demo-step">
+          <div class="demo-step-icon">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+          </div>
+          <span class="demo-step-label">3. Visualize o histórico</span>
+        </div>
+      </div>
+      <p class="demo-coming-soon">Demo em breve</p>
+    </div>
+  </div>
+</div>
 
 <!-- LOGOS BAND -->
 <div class="logos-band">
