@@ -24,9 +24,10 @@
      TOKENS
   ============================================================ */
   :root {
-    --cobalt:        oklch(0.32 0.18 264);
-    --cobalt-mid:    oklch(0.38 0.17 264);
-    --cobalt-deep:   oklch(0.24 0.16 264);
+    --cobalt:        oklch(0.14 0.04 264);
+    --cobalt-mid:    oklch(0.18 0.05 264);
+    --cobalt-deep:   oklch(0.10 0.03 264);
+    --cobalt-accent: oklch(0.50 0.20 264);
 
     --cream:         oklch(0.93 0.025 78);
     --paper:         oklch(0.97 0.008 78);
@@ -36,7 +37,7 @@
     --ink-soft:      oklch(0.52 0.03 264);
 
     --on-cobalt:     oklch(0.96 0.006 264);
-    --on-cobalt-dim: oklch(0.72 0.05 264);
+    --on-cobalt-dim: oklch(0.62 0.04 264);
 
     --ok:            oklch(0.62 0.14 148);
     --ok-bg:         oklch(0.96 0.04 148);
@@ -111,9 +112,8 @@
   .cobalt-surface {
     background-color: var(--cobalt);
     background-image:
-      radial-gradient(ellipse 55% 70% at 10% 40%,  oklch(0.44 0.15 264 / 0.45) 0%, transparent 100%),
-      radial-gradient(ellipse 40% 50% at 88% 15%,  oklch(0.25 0.20 256 / 0.55) 0%, transparent 100%),
-      radial-gradient(ellipse 35% 40% at 65% 85%,  oklch(0.27 0.17 272 / 0.35) 0%, transparent 100%);
+      radial-gradient(ellipse 60% 50% at 5% 30%,  oklch(0.22 0.08 264 / 0.6) 0%, transparent 100%),
+      radial-gradient(ellipse 40% 40% at 90% 10%,  oklch(0.10 0.04 256 / 0.8) 0%, transparent 100%);
   }
 
   /* ============================================================
@@ -229,8 +229,8 @@
     flex: 1;
     height: 48px;
     padding: 0 14px;
-    background: oklch(0.40 0.10 264 / 0.5);
-    border: 1px solid oklch(0.55 0.10 264 / 0.5);
+    background: oklch(0.20 0.04 264 / 0.8);
+    border: 1px solid oklch(0.32 0.06 264 / 0.7);
     border-radius: 6px;
     color: var(--on-cobalt);
     font-size: 0.9375rem;
@@ -240,8 +240,8 @@
   }
   .form-email::placeholder { color: var(--on-cobalt-dim); }
   .form-email:focus {
-    border-color: var(--cream);
-    background: oklch(0.40 0.10 264 / 0.7);
+    border-color: var(--cobalt-accent);
+    background: oklch(0.20 0.05 264 / 0.9);
   }
   .form-email:focus-visible { outline: 2px solid var(--cream); outline-offset: 2px; }
   .form-email[aria-invalid="true"] { border-color: var(--error-border); }
@@ -276,11 +276,96 @@
     color: var(--on-cobalt);
     line-height: 1.5;
     padding: 18px 20px;
-    background: oklch(0.40 0.10 264 / 0.4);
-    border: 1px solid oklch(0.55 0.10 264 / 0.5);
+    background: oklch(0.20 0.04 264 / 0.8);
+    border: 1px solid oklch(0.32 0.06 264 / 0.6);
     border-radius: 10px;
     max-width: 400px;
   }
+
+  /* ===== BEAT 3: SPLIT with extraction panel ===== */
+  .beat-split {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(40px, 5vw, 80px);
+    align-items: center;
+  }
+
+  .extraction-panel {
+    background: white;
+    border: 1px solid var(--paper-border);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow:
+      0 1px 2px oklch(0.10 0.02 264 / 0.12),
+      0 12px 40px oklch(0.10 0.02 264 / 0.14);
+  }
+
+  .ep-topbar {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--paper-border);
+    background: var(--paper);
+  }
+  .ep-topbar-title { font-size: 0.8125rem; font-weight: 600; color: var(--ink); }
+  .ep-topbar-sub   { font-size: 0.75rem; color: var(--ink-soft); margin-left: auto; }
+
+  .ep-body { padding: 18px; display: flex; flex-direction: column; gap: 10px; }
+
+  .ep-file {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 14px;
+    background: var(--paper);
+    border: 1px solid var(--paper-border);
+    border-radius: 8px;
+  }
+  .ep-file-icon {
+    width: 32px; height: 36px; flex-shrink: 0;
+    background: oklch(0.94 0.03 24);
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.5rem; font-weight: 800;
+    color: oklch(0.52 0.18 24);
+    letter-spacing: 0.02em;
+  }
+  .ep-file-name  { font-size: 0.8125rem; font-weight: 600; color: var(--ink); }
+  .ep-file-meta  { font-size: 0.75rem; color: var(--ink-soft); }
+
+  .ep-status {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 0.8125rem; font-weight: 500;
+  }
+  .ep-status.done {
+    background: var(--ok-bg);
+    color: oklch(0.38 0.14 148);
+  }
+  .ep-status-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: currentColor; flex-shrink: 0;
+  }
+
+  .ep-results { display: flex; flex-direction: column; gap: 6px; }
+  .ep-result-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 9px 14px;
+    border: 1px solid var(--paper-border);
+    border-radius: 8px;
+    background: white;
+  }
+  .ep-result-name { font-size: 0.8125rem; font-weight: 500; color: var(--ink); }
+  .ep-result-val  {
+    font-size: 0.875rem; font-weight: 600; color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .ep-result-badge {
+    font-size: 0.625rem; font-weight: 700;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    padding: 2px 7px; border-radius: 100px;
+  }
+  .ep-result-badge.ok   { background: var(--ok-bg);   color: oklch(0.42 0.14 148); }
+  .ep-result-badge.warn { background: var(--warn-bg);  color: oklch(0.48 0.15 56);  }
 
   .form-trust {
     font-size: 0.75rem;
@@ -305,30 +390,108 @@
      PHONE MOCKUP
   ============================================================ */
   .phone-shell {
-    width: 264px;
-    background: oklch(0.12 0.02 264);
-    border-radius: 44px;
-    padding: 12px;
+    width: 270px;
+    background: oklch(0.09 0.02 264);
+    border-radius: 54px;
+    padding: 5px;
     box-shadow:
-      0 0 0 1px oklch(0.45 0.10 264 / 0.4),
-      0 40px 90px oklch(0.14 0.15 264 / 0.65),
-      0 8px 24px  oklch(0.14 0.15 264 / 0.35);
+      0 0 0 1px oklch(0.28 0.06 264 / 0.6),
+      0 40px 90px oklch(0.06 0.04 264 / 0.9),
+      0 8px 24px  oklch(0.06 0.04 264 / 0.5);
   }
 
   .phone-island {
-    width: 88px; height: 24px;
-    background: oklch(0.10 0.01 264);
-    border-radius: 0 0 14px 14px;
-    margin: 0 auto 6px;
+    width: 78px; height: 24px;
+    background: oklch(0.06 0.01 264);
+    border-radius: 0 0 16px 16px;
+    margin: 0 auto 0;
   }
 
   .phone-screen {
-    border-radius: 32px;
+    border-radius: 50px;
     overflow: hidden;
     background: var(--paper);
-    height: 470px;
+    height: 500px;
     display: flex;
     flex-direction: column;
+  }
+
+  /* ===== ORIGINAL APP SCREEN: HOME ===== */
+  .screen-home { background: hsl(210,20%,98%); display: flex; flex-direction: column; height: 100%; }
+
+  .app-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 12px 8px;
+    background: white;
+    border-bottom: 1px solid hsl(214,20%,92%);
+    flex-shrink: 0;
+  }
+  .app-header-logo { display: flex; align-items: center; gap: 5px; }
+  .app-logo-mark {
+    width: 18px; height: 18px;
+    background: var(--cobalt-accent);
+    border-radius: 5px;
+    display: flex; align-items: center; justify-content: center;
+    padding: 3px;
+  }
+  .app-logo-mark svg { width: 100%; height: 100%; }
+  .app-logo-text { font-size: 0.6rem; font-weight: 700; color: hsl(220,20%,12%); letter-spacing: -0.01em; }
+  .app-header-avatar {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--cobalt-accent);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.42rem; font-weight: 700; color: white;
+  }
+
+  .home-hero-band {
+    background-color: var(--cobalt-accent);
+    background-image: radial-gradient(ellipse 100% 150% at 50% 0%, oklch(0.62 0.18 264) 0%, transparent 100%);
+    padding: 12px;
+    flex-shrink: 0;
+  }
+  .home-hero-top {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .home-greeting { font-size: 0.58rem; font-weight: 700; color: white; margin-bottom: 2px; }
+  .home-sub      { font-size: 0.44rem; color: rgba(255,255,255,0.7); }
+  .home-initials {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.38rem; font-weight: 700; color: white;
+  }
+  .home-chips { display: flex; gap: 5px; }
+  .home-chip {
+    display: flex; align-items: center; gap: 4px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 12px; padding: 4px 8px;
+  }
+  .home-chip-val   { font-size: 0.65rem; font-weight: 700; color: white; }
+  .home-chip-val.warn { color: #fde68a; }
+  .home-chip-label { font-size: 0.38rem; color: rgba(255,255,255,0.65); }
+
+  .page-content { flex: 1; padding: 8px; overflow: hidden; }
+  .section-label {
+    font-size: 0.42rem; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; color: hsl(215,14%,46%);
+    padding: 0 2px; margin-bottom: 6px;
+  }
+  .recent-card {
+    display: flex; align-items: center; gap: 7px;
+    padding: 7px 9px; background: white;
+    border-radius: 8px; margin-bottom: 4px;
+    border: 1px solid hsl(214,20%,91%);
+  }
+  .recent-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--ok); flex-shrink: 0;
+  }
+  .recent-name { font-size: 0.5rem; font-weight: 600; color: hsl(220,20%,12%); margin-bottom: 1px; }
+  .recent-lab  { font-size: 0.42rem; color: hsl(215,14%,46%); }
+  .recent-badge {
+    margin-left: auto; font-size: 0.4rem; font-weight: 600;
+    color: hsl(215,14%,56%); white-space: nowrap;
   }
 
   .pscreen-header {
@@ -749,78 +912,81 @@
           <div class="phone-shell">
             <div class="phone-island"></div>
             <div class="phone-screen">
-              <div class="pscreen-header">
-                <div class="pscreen-top">
-                  <span class="pscreen-wordmark">FOLIO AI</span>
-                  <div class="pscreen-avatar">JP</div>
-                </div>
-                <p class="pscreen-greeting">Bom dia, João</p>
-                <p class="pscreen-title">Seus exames</p>
-              </div>
-              <div class="pscreen-body">
-                <p class="pscreen-section-label">Recentes</p>
-                <div class="pscreen-exam">
-                  <span class="pscreen-dot ok"></span>
-                  <div class="pscreen-info">
-                    <p class="pscreen-name">Hemograma completo</p>
-                    <p class="pscreen-date">15 jan. 2025 · Fleury</p>
+              <div class="screen-home">
+                <div class="app-header">
+                  <div class="app-header-logo">
+                    <div class="app-logo-mark">
+                      <svg fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                      </svg>
+                    </div>
+                    <span class="app-logo-text">Folio AI</span>
                   </div>
-                  <span class="pscreen-arrow">›</span>
+                  <div class="app-header-avatar">JT</div>
                 </div>
-                <div class="pscreen-exam">
-                  <span class="pscreen-dot warn"></span>
-                  <div class="pscreen-info">
-                    <p class="pscreen-name">Colesterol e triglicérides</p>
-                    <p class="pscreen-date">03 nov. 2024 · Sabin</p>
+                <div class="home-hero-band">
+                  <div class="home-hero-top">
+                    <div>
+                      <div class="home-greeting">Bom dia</div>
+                      <div class="home-sub">Resumo da sua saúde</div>
+                    </div>
+                    <div class="home-initials">JT</div>
                   </div>
-                  <span class="pscreen-arrow">›</span>
+                  <div class="home-chips">
+                    <div class="home-chip">
+                      <div class="home-chip-val">7</div>
+                      <div class="home-chip-label">exames</div>
+                    </div>
+                    <div class="home-chip">
+                      <div class="home-chip-val warn">2</div>
+                      <div class="home-chip-label">atenção</div>
+                    </div>
+                    <div class="home-chip">
+                      <div class="home-chip-val">24</div>
+                      <div class="home-chip-label">métricas</div>
+                    </div>
+                  </div>
                 </div>
-                <div class="pscreen-exam">
-                  <span class="pscreen-dot ok"></span>
-                  <div class="pscreen-info">
-                    <p class="pscreen-name">Glicose em jejum</p>
-                    <p class="pscreen-date">03 nov. 2024 · Sabin</p>
+                <div class="page-content">
+                  <div class="section-label">Exames Recentes</div>
+                  <div class="recent-card">
+                    <div class="recent-dot"></div>
+                    <div>
+                      <div class="recent-name">Exame de Sangue</div>
+                      <div class="recent-lab">Fleury · 15 mar. 2025</div>
+                    </div>
+                    <div class="recent-badge">15 mar</div>
                   </div>
-                  <span class="pscreen-arrow">›</span>
-                </div>
-                <div class="pscreen-exam">
-                  <span class="pscreen-dot ok"></span>
-                  <div class="pscreen-info">
-                    <p class="pscreen-name">Função tireoidiana (TSH)</p>
-                    <p class="pscreen-date">12 ago. 2024 · Dasa</p>
+                  <div class="recent-card">
+                    <div class="recent-dot" style="background:var(--warn)"></div>
+                    <div>
+                      <div class="recent-name">Colesterol e Triglicérides</div>
+                      <div class="recent-lab">Sabin · 03 nov. 2024</div>
+                    </div>
+                    <div class="recent-badge">03 nov</div>
                   </div>
-                  <span class="pscreen-arrow">›</span>
-                </div>
-                <div class="pscreen-exam">
-                  <span class="pscreen-dot warn"></span>
-                  <div class="pscreen-info">
-                    <p class="pscreen-name">Vitamina D 25-OH</p>
-                    <p class="pscreen-date">12 ago. 2024 · Dasa</p>
+                  <div class="recent-card">
+                    <div class="recent-dot"></div>
+                    <div>
+                      <div class="recent-name">Bioimpedância</div>
+                      <div class="recent-lab">02 fev. 2025</div>
+                    </div>
+                    <div class="recent-badge">02 fev</div>
                   </div>
-                  <span class="pscreen-arrow">›</span>
+                  <div class="recent-card">
+                    <div class="recent-dot"></div>
+                    <div>
+                      <div class="recent-name">Exame Ocular</div>
+                      <div class="recent-lab">20 jan. 2025</div>
+                    </div>
+                    <div class="recent-badge">20 jan</div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-      </div>
-    </section>
-
-    <!-- ==================== BEAT 1 ==================== -->
-    <hr class="beat-rule" aria-hidden="true">
-
-    <section class="section cobalt-surface" aria-labelledby="beat1-h">
-      <div class="grid">
-        <div class="beat-inner">
-          <span class="beat-num" data-reveal>01</span>
-          <h2 class="beat-headline" id="beat1-h" data-reveal data-delay="1">
-            Você recebe um exame por WhatsApp. E perde o anterior.
-          </h2>
-          <p class="beat-body" data-reveal data-delay="2">
-            PDFs espalhados em e-mails, fotos no rolo da câmera, resultados em portais que expiram. Na consulta, você não sabe ao certo o que mudou desde o último exame.
-          </p>
-        </div>
       </div>
     </section>
 
