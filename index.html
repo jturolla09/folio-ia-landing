@@ -34,7 +34,7 @@
     --paper-border:  oklch(0.90 0.012 264);
 
     --ink:           oklch(0.18 0.018 264);
-    --ink-soft:      oklch(0.52 0.03 264);
+    --ink-soft:      oklch(0.44 0.04 264);
 
     --on-cobalt:     oklch(0.96 0.006 264);
     --on-cobalt-dim: oklch(0.62 0.04 264);
@@ -282,7 +282,7 @@
     max-width: 400px;
   }
 
-  /* ===== BEAT 3: SPLIT with extraction panel ===== */
+  /* ===== EXTRACTION PANEL ===== */
   .beat-split {
     grid-column: 1 / -1;
     display: grid;
@@ -297,8 +297,9 @@
     border-radius: 14px;
     overflow: hidden;
     box-shadow:
-      0 1px 2px oklch(0.10 0.02 264 / 0.12),
-      0 12px 40px oklch(0.10 0.02 264 / 0.14);
+      0 0 0 1px oklch(0.35 0.08 264 / 0.35),
+      0 20px 56px oklch(0.06 0.03 264 / 0.55),
+      0 4px 12px oklch(0.06 0.03 264 / 0.25);
   }
 
   .ep-topbar {
@@ -367,6 +368,8 @@
   .ep-result-badge.ok   { background: var(--ok-bg);   color: oklch(0.42 0.14 148); }
   .ep-result-badge.warn { background: var(--warn-bg);  color: oklch(0.48 0.15 56);  }
 
+  .ep-result-right { display: flex; align-items: center; gap: 10px; }
+
   .form-trust {
     font-size: 0.75rem;
     color: var(--on-cobalt-dim);
@@ -380,11 +383,7 @@
   }
   .form-trust a:hover { color: var(--on-cobalt); }
 
-  .cf-turnstile {
-    transform: scale(0.85);
-    transform-origin: left top;
-    margin-bottom: -6px;
-  }
+  .cf-turnstile { display: none; margin-top: 6px; }
 
   /* ============================================================
      PHONE MOCKUP
@@ -392,8 +391,9 @@
   .phone-shell {
     width: 270px;
     background: oklch(0.09 0.02 264);
-    border-radius: 54px;
-    padding: 5px;
+    border-radius: 48px;
+    position: relative;
+    overflow: hidden;
     box-shadow:
       0 0 0 1px oklch(0.28 0.06 264 / 0.6),
       0 40px 90px oklch(0.06 0.04 264 / 0.9),
@@ -401,19 +401,23 @@
   }
 
   .phone-island {
-    width: 78px; height: 24px;
+    position: absolute;
+    top: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90px; height: 28px;
     background: oklch(0.06 0.01 264);
-    border-radius: 0 0 16px 16px;
-    margin: 0 auto 0;
+    border-radius: 14px;
+    z-index: 10;
   }
 
   .phone-screen {
-    border-radius: 50px;
     overflow: hidden;
     background: var(--paper);
-    height: 500px;
+    height: 540px;
     display: flex;
     flex-direction: column;
+    padding-top: 54px;
   }
 
   /* ===== ORIGINAL APP SCREEN: HOME ===== */
@@ -575,6 +579,8 @@
   .pscreen-date  { font-size: 0.44rem; color: var(--ink-soft); }
   .pscreen-arrow { font-size: 0.5rem; color: var(--ink-soft); }
 
+  .beat-split .beat-inner { grid-column: auto; }
+
   /* ============================================================
      SECTION / BEAT SHARED
   ============================================================ */
@@ -601,7 +607,7 @@
     font-weight: 700;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--on-cobalt-dim);
+    color: var(--ink-soft);
   }
 
   .beat-headline {
@@ -609,21 +615,27 @@
     font-weight: 700;
     line-height: 1.1;
     letter-spacing: -0.03em;
-    color: var(--on-cobalt);
+    color: var(--ink);
     max-width: 20ch;
   }
 
   .beat-body {
     font-size: clamp(1rem, 1.5vw, 1.125rem);
-    color: var(--on-cobalt-dim);
+    color: var(--ink-soft);
     line-height: 1.72;
     max-width: 52ch;
   }
 
+  .cobalt-surface .beat-num      { color: var(--on-cobalt-dim); }
+  .cobalt-surface .beat-headline { color: var(--on-cobalt); }
+  .cobalt-surface .beat-body     { color: var(--on-cobalt-dim); }
+
+  .paper-surface { background-color: var(--paper); }
+
   /* ============================================================
-     BEAT 2 — METRICS PANEL (paper)
+     BEAT 2 — METRICS PANEL (cobalt)
   ============================================================ */
-  .beat-metrics { background-color: var(--paper); }
+  .beat-metrics { }
 
   .beat-metrics-inner {
     grid-column: 1 / -1;
@@ -647,6 +659,8 @@
     margin-inline: auto;
     line-height: 1.65;
   }
+  .cobalt-surface .beat-caption h2 { color: var(--on-cobalt); }
+  .cobalt-surface .beat-caption p  { color: var(--on-cobalt-dim); }
 
   /* App frame */
   .app-frame {
@@ -834,9 +848,10 @@
      RESPONSIVE
   ============================================================ */
   @media (max-width: 960px) {
-    .hero-copy       { grid-column: 1 / -1; }
-    .hero-phone-wrap { grid-column: 1 / -1; justify-content: flex-start; }
-    .beat-inner      { grid-column: 1 / -1; }
+    .hero-copy        { grid-column: 1 / -1; }
+    .hero-phone-wrap  { grid-column: 1 / -1; justify-content: flex-start; }
+    .beat-inner       { grid-column: 1 / -1; }
+    .beat-split       { grid-template-columns: 1fr; }
     .footer-cta-inner { grid-template-columns: 1fr; }
   }
 
@@ -848,7 +863,6 @@
     .footer-meta     { flex-direction: column; gap: 16px; align-items: flex-start; }
     .form-row        { flex-direction: column; }
     .form-submit     { width: 100%; }
-    .cf-turnstile    { transform: scale(0.78); }
   }
   </style>
 </head>
@@ -896,6 +910,8 @@
               <div class="cf-turnstile"
                 data-sitekey="0x4AAAAAAC68PdM4SGMiW5QI"
                 data-callback="onTurnstileHero"
+                data-error-callback="onTurnstileHeroError"
+                data-expired-callback="onTurnstileHeroError"
                 id="turnstile-hero"></div>
               <p class="form-trust">
                 Criptografado. Conforme LGPD. Gratuito durante a beta.
@@ -990,8 +1006,75 @@
       </div>
     </section>
 
+    <!-- ==================== BEAT 1: EXTRACTION ==================== -->
+    <hr class="beat-rule" aria-hidden="true">
+
+    <section class="section paper-surface" aria-labelledby="beat1-h">
+      <div class="grid">
+        <div class="beat-split">
+
+          <div class="beat-inner">
+            <span class="beat-num" data-reveal>01</span>
+            <h2 class="beat-headline" id="beat1-h" data-reveal data-delay="1">
+              Sobe o PDF. A gente faz o resto.
+            </h2>
+            <p class="beat-body" data-reveal data-delay="2">
+              O Folio AI lê o arquivo, identifica os valores e monta o histórico automaticamente. Sem digitar nada, sem copiar tabela.
+            </p>
+          </div>
+
+          <div class="extraction-panel"
+            data-reveal data-delay="1"
+            role="img"
+            aria-label="Painel mostrando extração automática de um hemograma do Fleury com 12 valores identificados">
+            <div class="ep-topbar">
+              <span class="ep-topbar-title">Extração de resultados</span>
+              <span class="ep-topbar-sub">Folio AI</span>
+            </div>
+            <div class="ep-body">
+              <div class="ep-file">
+                <div class="ep-file-icon">PDF</div>
+                <div>
+                  <div class="ep-file-name">hemograma_fleury_jan2025.pdf</div>
+                  <div class="ep-file-meta">284 KB · Fleury</div>
+                </div>
+              </div>
+              <div class="ep-status done">
+                <span class="ep-status-dot"></span>
+                Extração concluída · 12 valores identificados
+              </div>
+              <div class="ep-results">
+                <div class="ep-result-row">
+                  <span class="ep-result-name">Hemoglobina</span>
+                  <div class="ep-result-right">
+                    <span class="ep-result-val">14,2 g/dL</span>
+                    <span class="ep-result-badge ok">Normal</span>
+                  </div>
+                </div>
+                <div class="ep-result-row">
+                  <span class="ep-result-name">Colesterol LDL</span>
+                  <div class="ep-result-right">
+                    <span class="ep-result-val">138 mg/dL</span>
+                    <span class="ep-result-badge warn">Atenção</span>
+                  </div>
+                </div>
+                <div class="ep-result-row">
+                  <span class="ep-result-name">Glicose</span>
+                  <div class="ep-result-right">
+                    <span class="ep-result-val">92 mg/dL</span>
+                    <span class="ep-result-badge ok">Normal</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
     <!-- ==================== BEAT 2: METRICS ==================== -->
-    <section class="section beat-metrics" aria-labelledby="beat2-h">
+    <section class="section beat-metrics cobalt-surface" aria-labelledby="beat2-h">
       <div class="grid">
         <div class="beat-metrics-inner">
 
@@ -1128,7 +1211,7 @@
     <!-- ==================== BEAT 3 ==================== -->
     <hr class="beat-rule" aria-hidden="true">
 
-    <section class="section cobalt-surface" aria-labelledby="beat3-h">
+    <section class="section paper-surface" aria-labelledby="beat3-h">
       <div class="grid">
         <div class="beat-inner">
           <span class="beat-num" data-reveal>02</span>
@@ -1169,6 +1252,8 @@
               <div class="cf-turnstile"
                 data-sitekey="0x4AAAAAAC68PdM4SGMiW5QI"
                 data-callback="onTurnstileCta"
+                data-error-callback="onTurnstileCtaError"
+                data-expired-callback="onTurnstileCtaError"
                 id="turnstile-cta"></div>
               <p class="form-trust">
                 Criptografado. Conforme LGPD. Gratuito durante a beta.
@@ -1183,7 +1268,7 @@
             <span class="footer-sep" aria-hidden="true">/</span>
             <a href="/terms-of-service.html">Termos de Uso</a>
           </p>
-          <p class="footer-copy-r">&copy; 2025 Folio AI</p>
+          <p class="footer-copy-r">&copy; 2026 Folio AI</p>
         </div>
 
       </div>
@@ -1196,10 +1281,23 @@
     'use strict';
 
     var FORMSPREE = 'https://formspree.io/f/mreoajkw';
-    var tokens = { hero: null, cta: null };
+    var tokens        = { hero: null, cta: null };
+    var turnstileFailed = { hero: false, cta: false };
+    var pendingSubmit   = { hero: null,  cta: null  };
 
-    window.onTurnstileHero = function (t) { tokens.hero = t; };
-    window.onTurnstileCta  = function (t) { tokens.cta  = t; };
+    function fireIfPending(which) {
+      if (pendingSubmit[which]) {
+        var f = pendingSubmit[which];
+        pendingSubmit[which] = null;
+        doSubmit(f, which);
+      }
+    }
+
+    window.onTurnstileHero = function (t) { tokens.hero = t; fireIfPending('hero'); };
+    window.onTurnstileCta  = function (t) { tokens.cta  = t; fireIfPending('cta');  };
+
+    window.onTurnstileHeroError = function () { turnstileFailed.hero = true; fireIfPending('hero'); };
+    window.onTurnstileCtaError  = function () { turnstileFailed.cta  = true; fireIfPending('cta');  };
 
     function showSuccess(formEl) {
       var p = document.createElement('p');
@@ -1222,29 +1320,15 @@
     }
 
     function resetTurnstile(which) {
-      if (window.turnstile) window.turnstile.reset();
+      if (window.turnstile) window.turnstile.reset('#turnstile-' + which);
       tokens[which] = null;
     }
 
-    async function handleSubmit(formEl, which) {
+    async function doSubmit(formEl, which) {
       var emailInput = formEl.querySelector('[type="email"]');
       var btn        = formEl.querySelector('[type="submit"]');
       var feedback   = formEl.querySelector('.form-feedback');
-      var email      = emailInput.value.trim();
-      var origLabel  = btn.textContent;
-
-      clearError(feedback, emailInput);
-
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        showError(feedback, emailInput, 'Digite um endereço de e-mail válido.');
-        return;
-      }
-
-      var token = tokens[which];
-      if (!token) {
-        showError(feedback, emailInput, 'Complete a verificação de segurança antes de continuar.');
-        return;
-      }
+      var token      = tokens[which];
 
       btn.disabled = true;
       btn.textContent = 'Aguarde...';
@@ -1253,7 +1337,7 @@
         var res = await fetch(FORMSPREE, {
           method: 'POST',
           headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: email, source: which, 'cf-turnstile-response': token })
+          body: JSON.stringify({ email: formEl.querySelector('[type="email"]').value.trim(), source: which, 'cf-turnstile-response': token })
         });
 
         if (res.ok) {
@@ -1265,15 +1349,52 @@
             : 'Erro no servidor. Tente novamente em alguns instantes.';
           showError(feedback, emailInput, msg);
           btn.disabled = false;
-          btn.textContent = origLabel;
+          btn.textContent = 'Entrar na lista';
           resetTurnstile(which);
         }
       } catch (_) {
         showError(feedback, emailInput, 'Sem conexão. Verifique sua internet e tente novamente.');
         btn.disabled = false;
-        btn.textContent = origLabel;
+        btn.textContent = 'Entrar na lista';
         resetTurnstile(which);
       }
+    }
+
+    function handleSubmit(formEl, which) {
+      var emailInput = formEl.querySelector('[type="email"]');
+      var btn        = formEl.querySelector('[type="submit"]');
+      var feedback   = formEl.querySelector('.form-feedback');
+      var email      = emailInput.value.trim();
+
+      clearError(feedback, emailInput);
+
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        showError(feedback, emailInput, 'Digite um endereço de e-mail válido.');
+        return;
+      }
+
+      // Token ready or Turnstile unavailable — submit immediately
+      if (tokens[which] || turnstileFailed[which]) {
+        doSubmit(formEl, which);
+        return;
+      }
+
+      // Token not yet ready: reveal widget, wait for callback to auto-submit
+      var widget = document.getElementById('turnstile-' + which);
+      if (widget) widget.style.display = '';
+      pendingSubmit[which] = formEl;
+      btn.disabled = true;
+      btn.textContent = 'Verificando...';
+
+      // Hard fallback: 10s if Turnstile never resolves
+      setTimeout(function () {
+        if (pendingSubmit[which] === formEl) {
+          pendingSubmit[which] = null;
+          turnstileFailed[which] = true;
+          btn.disabled = false;
+          btn.textContent = 'Entrar na lista';
+        }
+      }, 10000);
     }
 
     document.querySelectorAll('.waitlist-form').forEach(function (form) {
