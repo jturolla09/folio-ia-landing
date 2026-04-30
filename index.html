@@ -1381,7 +1381,7 @@
 
       // Token not yet ready: reveal widget, wait for callback to auto-submit
       var widget = document.getElementById('turnstile-' + which);
-      if (widget) widget.style.display = '';
+      if (widget) widget.style.display = 'block';
       pendingSubmit[which] = formEl;
       btn.disabled = true;
       btn.textContent = 'Verificando...';
