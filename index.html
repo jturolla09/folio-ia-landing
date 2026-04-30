@@ -292,14 +292,14 @@
   }
 
   .extraction-panel {
-    background: white;
+    background: oklch(0.99 0.004 264);
     border: 1px solid var(--paper-border);
     border-radius: 14px;
     overflow: hidden;
     box-shadow:
-      0 0 0 1px oklch(0.35 0.08 264 / 0.35),
-      0 20px 56px oklch(0.06 0.03 264 / 0.55),
-      0 4px 12px oklch(0.06 0.03 264 / 0.25);
+      0 2px 8px   oklch(0.40 0.04 264 / 0.08),
+      0 16px 48px oklch(0.30 0.04 264 / 0.13),
+      0 4px 16px  oklch(0.30 0.04 264 / 0.07);
   }
 
   .ep-topbar {
@@ -353,7 +353,7 @@
     padding: 9px 14px;
     border: 1px solid var(--paper-border);
     border-radius: 8px;
-    background: white;
+    background: oklch(0.99 0.004 264);
   }
   .ep-result-name { font-size: 0.8125rem; font-weight: 500; color: var(--ink); }
   .ep-result-val  {
@@ -421,13 +421,13 @@
   }
 
   /* ===== ORIGINAL APP SCREEN: HOME ===== */
-  .screen-home { background: hsl(210,20%,98%); display: flex; flex-direction: column; height: 100%; }
+  .screen-home { background: var(--paper); display: flex; flex-direction: column; height: 100%; }
 
   .app-header {
     display: flex; align-items: center; justify-content: space-between;
     padding: 10px 12px 8px;
-    background: white;
-    border-bottom: 1px solid hsl(214,20%,92%);
+    background: oklch(0.99 0.004 264);
+    border-bottom: 1px solid var(--paper-border);
     flex-shrink: 0;
   }
   .app-header-logo { display: flex; align-items: center; gap: 5px; }
@@ -439,7 +439,7 @@
     padding: 3px;
   }
   .app-logo-mark svg { width: 100%; height: 100%; }
-  .app-logo-text { font-size: 0.6rem; font-weight: 700; color: hsl(220,20%,12%); letter-spacing: -0.01em; }
+  .app-logo-text { font-size: 0.6rem; font-weight: 700; color: var(--ink); letter-spacing: -0.01em; }
   .app-header-avatar {
     width: 22px; height: 22px; border-radius: 50%;
     background: var(--cobalt-accent);
@@ -478,24 +478,24 @@
   .page-content { flex: 1; padding: 8px; overflow: hidden; }
   .section-label {
     font-size: 0.42rem; font-weight: 600; letter-spacing: 0.08em;
-    text-transform: uppercase; color: hsl(215,14%,46%);
+    text-transform: uppercase; color: var(--ink-soft);
     padding: 0 2px; margin-bottom: 6px;
   }
   .recent-card {
     display: flex; align-items: center; gap: 7px;
     padding: 7px 9px; background: white;
     border-radius: 8px; margin-bottom: 4px;
-    border: 1px solid hsl(214,20%,91%);
+    border: 1px solid var(--paper-border);
   }
   .recent-dot {
     width: 6px; height: 6px; border-radius: 50%;
     background: var(--ok); flex-shrink: 0;
   }
-  .recent-name { font-size: 0.5rem; font-weight: 600; color: hsl(220,20%,12%); margin-bottom: 1px; }
-  .recent-lab  { font-size: 0.42rem; color: hsl(215,14%,46%); }
+  .recent-name { font-size: 0.5rem; font-weight: 600; color: var(--ink); margin-bottom: 1px; }
+  .recent-lab  { font-size: 0.42rem; color: var(--ink-soft); }
   .recent-badge {
     margin-left: auto; font-size: 0.4rem; font-weight: 600;
-    color: hsl(215,14%,56%); white-space: nowrap;
+    color: var(--ink-soft); white-space: nowrap;
   }
 
   .pscreen-header {
@@ -553,7 +553,7 @@
     align-items: center;
     gap: 8px;
     padding: 8px 10px;
-    background: white;
+    background: oklch(0.99 0.004 264);
     border-radius: 8px;
     margin-bottom: 5px;
     border: 1px solid var(--paper-border);
@@ -635,7 +635,6 @@
   /* ============================================================
      BEAT 2 — METRICS PANEL (cobalt)
   ============================================================ */
-  .beat-metrics { }
 
   .beat-metrics-inner {
     grid-column: 1 / -1;
@@ -664,14 +663,14 @@
 
   /* App frame */
   .app-frame {
-    background: white;
+    background: oklch(0.99 0.004 264);
     border: 1px solid var(--paper-border);
     border-radius: 16px;
     overflow: hidden;
     box-shadow:
-      0 1px 2px  oklch(0.18 0.02 264 / 0.05),
-      0 8px 32px oklch(0.18 0.02 264 / 0.08),
-      0 2px 8px  oklch(0.18 0.02 264 / 0.04);
+      0 0 0 1px oklch(0.30 0.06 264 / 0.40),
+      0 28px 72px oklch(0.06 0.03 264 / 0.60),
+      0 6px 20px  oklch(0.06 0.03 264 / 0.32);
   }
 
   .app-topbar {
