@@ -1281,8 +1281,7 @@
 
     var FORMSPREE = 'https://formspree.io/f/mreoajkw';
     var tokens        = { hero: null, cta: null };
-    var turnstileFailed = { hero: false, cta: false };
-    var pendingSubmit   = { hero: null,  cta: null  };
+    var pendingSubmit = { hero: null, cta: null };
 
     function fireIfPending(which) {
       if (pendingSubmit[which]) {
@@ -1292,11 +1291,24 @@
       }
     }
 
+    function handleTurnstileError(which) {
+      var f = pendingSubmit[which];
+      if (!f) return;
+      pendingSubmit[which] = null;
+      tokens[which] = null;
+      var btn = f.querySelector('[type="submit"]');
+      var feedback = f.querySelector('.form-feedback');
+      var emailInput = f.querySelector('[type="email"]');
+      btn.disabled = false;
+      btn.textContent = 'Entrar na lista';
+      showError(feedback, emailInput, 'Verificação não concluída. Tente novamente.');
+    }
+
     window.onTurnstileHero = function (t) { tokens.hero = t; fireIfPending('hero'); };
     window.onTurnstileCta  = function (t) { tokens.cta  = t; fireIfPending('cta');  };
 
-    window.onTurnstileHeroError = function () { turnstileFailed.hero = true; fireIfPending('hero'); };
-    window.onTurnstileCtaError  = function () { turnstileFailed.cta  = true; fireIfPending('cta');  };
+    window.onTurnstileHeroError = function () { handleTurnstileError('hero'); };
+    window.onTurnstileCtaError  = function () { handleTurnstileError('cta');  };
 
     function showSuccess(formEl) {
       var p = document.createElement('p');
@@ -1372,28 +1384,32 @@
         return;
       }
 
-      // Token ready or Turnstile unavailable — submit immediately
-      if (tokens[which] || turnstileFailed[which]) {
-        doSubmit(formEl, which);
-        return;
-      }
+      // Prevent re-submission while verification is in progress
+      if (pendingSubmit[which]) return;
 
-      // Token not yet ready: reveal widget, wait for callback to auto-submit
-      var widget = document.getElementById('turnstile-' + which);
-      if (widget) widget.style.display = 'block';
+      // Reset any pre-loaded token to ensure Turnstile runs fresh on each submit
+      tokens[which] = null;
       pendingSubmit[which] = formEl;
       btn.disabled = true;
       btn.textContent = 'Verificando...';
 
-      // Hard fallback: 10s if Turnstile never resolves
+      // Show widget and trigger a fresh Turnstile verification
+      var widget = document.getElementById('turnstile-' + which);
+      if (widget) widget.style.display = 'block';
+      if (window.turnstile) {
+        window.turnstile.reset('#turnstile-' + which);
+      }
+
+      // Hard fallback: 12s if Turnstile never resolves
       setTimeout(function () {
         if (pendingSubmit[which] === formEl) {
           pendingSubmit[which] = null;
-          turnstileFailed[which] = true;
+          tokens[which] = null;
           btn.disabled = false;
           btn.textContent = 'Entrar na lista';
+          showError(feedback, emailInput, 'Verificação expirou. Tente novamente.');
         }
-      }, 10000);
+      }, 12000);
     }
 
     document.querySelectorAll('.waitlist-form').forEach(function (form) {
