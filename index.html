@@ -698,6 +698,62 @@
     text-decoration: underline;
     text-underline-offset: 3px;
   }
+
+  .faq-callout {
+    margin: 20px 0;
+    padding: 20px 22px;
+    border: 1px solid var(--paper-border);
+    border-radius: 10px;
+    background: oklch(0.99 0.004 264);
+  }
+  .faq-callout-title {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin: 0 0 12px;
+  }
+  .faq-callout-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 12px;
+    display: grid;
+    gap: 8px;
+  }
+  .faq-callout-list li {
+    margin: 0;
+    color: var(--ink);
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+  .faq-callout-label {
+    display: inline-block;
+    min-width: 7em;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+  .faq-callout-source {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+  }
+  .faq-callout-source a {
+    color: var(--cobalt-accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  @media (max-width: 480px) {
+    .faq-callout-label {
+      display: block;
+      min-width: 0;
+      margin-bottom: 2px;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .faq-q::after { transition: none; }
   }
@@ -1318,6 +1374,17 @@
                     <li><strong>Mínimo necessário.</strong> A gente coleta e-mail, perfil opcional (idade, sexo, peso) e os arquivos que você sobe. Nada é vendido nem usado para marketing.</li>
                     <li><strong>Você manda.</strong> Pela LGPD, peça acesso, correção ou exclusão quando quiser — apagar a conta apaga tudo. Dúvidas em <a href="mailto:privacy@folio-ia.app">privacy@folio-ia.app</a>.</li>
                   </ul>
+
+                  <div class="faq-callout" role="group" aria-label="Onde seus dados moram">
+                    <p class="faq-callout-title">Onde seus dados moram</p>
+                    <ul class="faq-callout-list">
+                      <li><span class="faq-callout-label">Hospedagem</span> Supabase, sobre infraestrutura AWS</li>
+                      <li><span class="faq-callout-label">Certificação</span> SOC 2 Type 2</li>
+                      <li><span class="faq-callout-label">Criptografia</span> AES-256 em repouso, TLS em trânsito</li>
+                    </ul>
+                    <p class="faq-callout-source">Verificável em <a href="https://supabase.com/security" target="_blank" rel="noopener noreferrer">supabase.com/security</a></p>
+                  </div>
+
                   <p>Detalhes completos na <a href="/privacy-policy.html">Política de Privacidade</a>.</p>
                 </div>
               </details>
