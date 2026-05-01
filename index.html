@@ -633,6 +633,76 @@
   .paper-surface { background-color: var(--paper); }
 
   /* ============================================================
+     FAQ
+  ============================================================ */
+
+  .faq-list {
+    list-style: none;
+    padding: 0;
+    margin: 32px 0 0;
+    max-width: 60ch;
+  }
+  .faq-item {
+    border-top: 1px solid var(--paper-border);
+    padding: 24px 0;
+  }
+  .faq-item:last-child {
+    border-bottom: 1px solid var(--paper-border);
+  }
+  .faq-q {
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    font-weight: 600;
+    font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+    letter-spacing: -0.015em;
+    color: var(--ink);
+  }
+  .faq-q::-webkit-details-marker { display: none; }
+  .faq-q::after {
+    content: '+';
+    font-weight: 400;
+    font-size: 1.5rem;
+    line-height: 1;
+    color: var(--ink-soft);
+    transition: transform 0.25s var(--ease-out-quart);
+    flex-shrink: 0;
+  }
+  .faq-item[open] .faq-q::after {
+    transform: rotate(45deg);
+  }
+  .faq-q:focus-visible {
+    outline: 2px solid var(--cobalt-accent);
+    outline-offset: 4px;
+    border-radius: 2px;
+  }
+  .faq-a {
+    margin-top: 16px;
+    color: var(--ink-soft);
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  .faq-a p { margin: 0 0 12px; }
+  .faq-a p:last-child { margin-bottom: 0; }
+  .faq-a ul {
+    margin: 0 0 12px;
+    padding-left: 20px;
+  }
+  .faq-a li { margin-bottom: 8px; }
+  .faq-a li strong { color: var(--ink); font-weight: 600; }
+  .faq-a a {
+    color: var(--cobalt-accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .faq-q::after { transition: none; }
+  }
+
+  /* ============================================================
      BEAT 2 — METRICS PANEL (cobalt)
   ============================================================ */
 
@@ -1220,6 +1290,39 @@
           <p class="beat-body" data-reveal data-delay="2">
             Sem diagnósticos, sem interpretações médicas. Só organização. O Folio AI não faz o papel do médico, ele faz o papel da pasta que você nunca teve.
           </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== FAQ ==================== -->
+    <section class="section faq paper-surface" aria-labelledby="faq-h">
+      <div class="grid">
+        <div class="beat-inner">
+          <span class="beat-num" data-reveal>FAQ</span>
+          <h2 class="beat-headline" id="faq-h" data-reveal data-delay="1">
+            Perguntas frequentes.
+          </h2>
+
+          <ul class="faq-list" data-reveal data-delay="2">
+            <li>
+              <details class="faq-item" open>
+                <summary class="faq-q">
+                  Meus exames ficam seguros? E se vazarem?
+                </summary>
+                <div class="faq-a">
+                  <p>Você é o dono do arquivo. A Folio é o cofre.</p>
+                  <ul>
+                    <li><strong>Criptografado em trânsito e em repouso.</strong> Tudo trafega via HTTPS e fica armazenado no Supabase, a mesma camada de infraestrutura usada por fintechs brasileiras.</li>
+                    <li><strong>A IA não guarda seus exames.</strong> O Google Gemini recebe o PDF para extrair os valores, devolve os dados estruturados e não retém nem treina modelo com o seu conteúdo.</li>
+                    <li><strong>Acesso isolado por conta.</strong> Seus dados ficam separados dos de qualquer outra pessoa. Ninguém da Folio lê seus exames de forma rotineira.</li>
+                    <li><strong>Mínimo necessário.</strong> A gente coleta e-mail, perfil opcional (idade, sexo, peso) e os arquivos que você sobe. Nada é vendido nem usado para marketing.</li>
+                    <li><strong>Você manda.</strong> Pela LGPD, peça acesso, correção ou exclusão quando quiser — apagar a conta apaga tudo. Dúvidas em <a href="mailto:privacy@folio-ia.app">privacy@folio-ia.app</a>.</li>
+                  </ul>
+                  <p>Detalhes completos na <a href="/privacy-policy.html">Política de Privacidade</a>.</p>
+                </div>
+              </details>
+            </li>
+          </ul>
         </div>
       </div>
     </section>
