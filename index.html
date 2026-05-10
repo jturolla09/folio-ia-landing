@@ -16,8 +16,6 @@
   <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
   <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap">
 
-  <!-- Cloudflare Turnstile -->
-  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
   <style>
   /* ============================================================
@@ -247,6 +245,10 @@
   .form-email[aria-invalid="true"] { border-color: var(--error-border); }
 
   .form-submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
     height: 48px;
     padding: 0 22px;
     background: var(--cream);
@@ -260,7 +262,6 @@
   }
   .form-submit:hover         { background: var(--on-cobalt); color: var(--cobalt-deep); }
   .form-submit:focus-visible { outline: 2px solid var(--cream); outline-offset: 2px; }
-  .form-submit:disabled      { opacity: 0.55; cursor: wait; }
 
   .form-feedback {
     font-size: 0.8125rem;
@@ -1000,7 +1001,7 @@
     <a href="/" class="nav-logo" aria-label="Folio AI — página inicial">
       Folio <span>AI</span>
     </a>
-    <a href="#waitlist" class="nav-cta">Entrar na lista</a>
+    <a href="https://folio-ai.app" class="nav-cta" target="_blank" rel="noopener">Usar o app</a>
   </nav>
 
   <main id="main">
@@ -1010,7 +1011,7 @@
       <div class="grid hero-inner">
 
         <div class="hero-copy">
-          <span class="hero-eyebrow" data-reveal>Acesso antecipado</span>
+          <span class="hero-eyebrow" data-reveal>Disponível agora</span>
 
           <h1 class="hero-headline" id="hero-headline" data-reveal data-delay="1">
             Seus exames,<br>em <em>um lugar</em> só.
@@ -1021,30 +1022,14 @@
           </p>
 
           <div data-reveal data-delay="3">
-            <form class="waitlist-form" id="hero-form" data-which="hero" novalidate aria-label="Formulário de lista de espera">
-              <div class="form-row">
-                <label for="hero-email" class="sr-only">Seu e-mail</label>
-                <input
-                  type="email" id="hero-email" name="email"
-                  class="form-email" placeholder="seu@email.com"
-                  autocomplete="email" required aria-required="true"
-                >
-                <button type="submit" class="form-submit">Entrar na lista</button>
-              </div>
-              <p class="form-feedback" id="hero-feedback" role="alert" hidden></p>
-              <div class="cf-turnstile"
-                data-sitekey="0x4AAAAAAC68PdM4SGMiW5QI"
-                data-callback="onTurnstileHero"
-                data-error-callback="onTurnstileHeroError"
-                data-expired-callback="onTurnstileHeroError"
-                id="turnstile-hero"></div>
-              <p class="form-trust">
-                Criptografado. Conforme LGPD. Gratuito durante a beta.
-                Ao entrar na lista, você concorda com a
-                <a href="/privacy-policy.html">Política de Privacidade</a>
-                e os <a href="/terms-of-service.html">Termos de Uso</a>.
-              </p>
-            </form>
+            <div class="form-row">
+              <a href="https://folio-ai.app" class="form-submit" target="_blank" rel="noopener">Usar o app grátis</a>
+            </div>
+            <p class="form-trust">
+              Gratuito durante a beta. Sem cartão de crédito.
+              <a href="/privacy-policy.html">Política de Privacidade</a>
+              · <a href="/terms-of-service.html">Termos de Uso</a>.
+            </p>
           </div>
         </div>
 
@@ -1395,39 +1380,24 @@
     </section>
 
     <!-- ==================== FOOTER-CTA ==================== -->
-    <footer class="footer-cta cobalt-surface" id="waitlist" aria-labelledby="cta-h">
+    <footer class="footer-cta cobalt-surface" id="cta" aria-labelledby="cta-h">
       <div class="grid">
 
         <div class="footer-cta-inner">
           <div class="footer-cta-copy">
-            <h2 id="cta-h" data-reveal>Quero meu arquivo de saúde.</h2>
+            <h2 id="cta-h" data-reveal>Comece agora. É grátis.</h2>
             <p data-reveal data-delay="1">
-              Entre na lista de acesso antecipado. Gratuito durante a beta, sem cartão de crédito.
+              Sem cadastro complicado, sem cartão de crédito. Sobe seu primeiro exame em menos de um minuto.
             </p>
           </div>
 
           <div class="footer-cta-form" data-reveal data-delay="1">
-            <form class="waitlist-form" id="cta-form" data-which="cta" novalidate aria-label="Formulário de lista de espera">
-              <div class="form-row">
-                <label for="cta-email" class="sr-only">Seu e-mail</label>
-                <input
-                  type="email" id="cta-email" name="email"
-                  class="form-email" placeholder="seu@email.com"
-                  autocomplete="email" required aria-required="true"
-                >
-                <button type="submit" class="form-submit">Entrar na lista</button>
-              </div>
-              <p class="form-feedback" id="cta-feedback" role="alert" hidden></p>
-              <div class="cf-turnstile"
-                data-sitekey="0x4AAAAAAC68PdM4SGMiW5QI"
-                data-callback="onTurnstileCta"
-                data-error-callback="onTurnstileCtaError"
-                data-expired-callback="onTurnstileCtaError"
-                id="turnstile-cta"></div>
-              <p class="form-trust">
-                Criptografado. Conforme LGPD. Gratuito durante a beta.
-              </p>
-            </form>
+            <div class="form-row">
+              <a href="https://folio-ai.app" class="form-submit" target="_blank" rel="noopener">Usar o app grátis</a>
+            </div>
+            <p class="form-trust">
+              Gratuito durante a beta. Conforme LGPD.
+            </p>
           </div>
         </div>
 
@@ -1448,147 +1418,6 @@
   <script>
   (function () {
     'use strict';
-
-    var FORMSPREE = 'https://formspree.io/f/mreoajkw';
-    var tokens        = { hero: null, cta: null };
-    var pendingSubmit = { hero: null, cta: null };
-
-    function fireIfPending(which) {
-      if (pendingSubmit[which]) {
-        var f = pendingSubmit[which];
-        pendingSubmit[which] = null;
-        doSubmit(f, which);
-      }
-    }
-
-    function handleTurnstileError(which) {
-      var f = pendingSubmit[which];
-      if (!f) return;
-      pendingSubmit[which] = null;
-      tokens[which] = null;
-      var btn = f.querySelector('[type="submit"]');
-      var feedback = f.querySelector('.form-feedback');
-      var emailInput = f.querySelector('[type="email"]');
-      btn.disabled = false;
-      btn.textContent = 'Entrar na lista';
-      showError(feedback, emailInput, 'Verificação não concluída. Tente novamente.');
-    }
-
-    window.onTurnstileHero = function (t) { tokens.hero = t; fireIfPending('hero'); };
-    window.onTurnstileCta  = function (t) { tokens.cta  = t; fireIfPending('cta');  };
-
-    window.onTurnstileHeroError = function () { handleTurnstileError('hero'); };
-    window.onTurnstileCtaError  = function () { handleTurnstileError('cta');  };
-
-    function showSuccess(formEl) {
-      var p = document.createElement('p');
-      p.className = 'form-success';
-      p.setAttribute('role', 'status');
-      p.textContent = 'Você está na lista. Avisamos quando o acesso for liberado.';
-      formEl.replaceWith(p);
-    }
-
-    function showError(feedbackEl, inputEl, msg) {
-      feedbackEl.textContent = msg;
-      feedbackEl.hidden = false;
-      inputEl.setAttribute('aria-invalid', 'true');
-      inputEl.focus();
-    }
-
-    function clearError(feedbackEl, inputEl) {
-      feedbackEl.hidden = true;
-      inputEl.removeAttribute('aria-invalid');
-    }
-
-    function resetTurnstile(which) {
-      if (window.turnstile) window.turnstile.reset('#turnstile-' + which);
-      tokens[which] = null;
-    }
-
-    async function doSubmit(formEl, which) {
-      var emailInput = formEl.querySelector('[type="email"]');
-      var btn        = formEl.querySelector('[type="submit"]');
-      var feedback   = formEl.querySelector('.form-feedback');
-      var token      = tokens[which];
-
-      btn.disabled = true;
-      btn.textContent = 'Aguarde...';
-
-      try {
-        var res = await fetch(FORMSPREE, {
-          method: 'POST',
-          headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: formEl.querySelector('[type="email"]').value.trim(), source: which, 'cf-turnstile-response': token })
-        });
-
-        if (res.ok) {
-          showSuccess(formEl);
-        } else {
-          var data = await res.json().catch(function () { return {}; });
-          var msg = (data && data.errors && data.errors[0] && data.errors[0].message)
-            ? data.errors[0].message
-            : 'Erro no servidor. Tente novamente em alguns instantes.';
-          showError(feedback, emailInput, msg);
-          btn.disabled = false;
-          btn.textContent = 'Entrar na lista';
-          resetTurnstile(which);
-        }
-      } catch (_) {
-        showError(feedback, emailInput, 'Sem conexão. Verifique sua internet e tente novamente.');
-        btn.disabled = false;
-        btn.textContent = 'Entrar na lista';
-        resetTurnstile(which);
-      }
-    }
-
-    function handleSubmit(formEl, which) {
-      var emailInput = formEl.querySelector('[type="email"]');
-      var btn        = formEl.querySelector('[type="submit"]');
-      var feedback   = formEl.querySelector('.form-feedback');
-      var email      = emailInput.value.trim();
-
-      clearError(feedback, emailInput);
-
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        showError(feedback, emailInput, 'Digite um endereço de e-mail válido.');
-        return;
-      }
-
-      // Prevent re-submission while verification is in progress
-      if (pendingSubmit[which]) return;
-
-      // Reset any pre-loaded token to ensure Turnstile runs fresh on each submit
-      tokens[which] = null;
-      pendingSubmit[which] = formEl;
-      btn.disabled = true;
-      btn.textContent = 'Verificando...';
-
-      // Show widget and trigger a fresh Turnstile verification
-      var widget = document.getElementById('turnstile-' + which);
-      if (widget) widget.style.display = 'block';
-      if (window.turnstile) {
-        window.turnstile.reset('#turnstile-' + which);
-      }
-
-      // Hard fallback: 12s if Turnstile never resolves
-      setTimeout(function () {
-        if (pendingSubmit[which] === formEl) {
-          pendingSubmit[which] = null;
-          tokens[which] = null;
-          btn.disabled = false;
-          btn.textContent = 'Entrar na lista';
-          showError(feedback, emailInput, 'Verificação expirou. Tente novamente.');
-        }
-      }, 12000);
-    }
-
-    document.querySelectorAll('.waitlist-form').forEach(function (form) {
-      var which = form.dataset.which;
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        handleSubmit(form, which);
-      });
-    });
 
     // Nav scroll state
     var nav    = document.querySelector('.nav');
@@ -1614,7 +1443,6 @@
       document.querySelectorAll('[data-reveal]').forEach(function (el) {
         var inHero = el.closest('.hero');
         if (inHero) {
-          // Hero animates on load, staggered
           var delay = (parseInt(el.dataset.delay || '0', 10)) * 90;
           setTimeout(function () { el.classList.add('revealed'); }, 80 + delay);
         } else {
