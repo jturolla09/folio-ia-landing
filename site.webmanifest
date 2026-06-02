@@ -1,0 +1,19 @@
+{
+  "name": "Folio AI — Seus exames em um lugar só",
+  "short_name": "Folio AI",
+  "description": "Arquivo de saúde pessoal: organize seus exames de sangue e laboratoriais em um histórico cronológico.",
+  "lang": "pt-BR",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#19276a",
+  "theme_color": "#19276a",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

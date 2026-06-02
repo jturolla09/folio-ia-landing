@@ -3,17 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Folio AI — Seus exames, em um lugar só</title>
-  <meta name="description" content="Folio AI organiza seus exames de sangue e outros resultados em um histórico pessoal. Sem diagnósticos, só organização.">
-  <meta property="og:title" content="Folio AI — Seus exames, em um lugar só">
-  <meta property="og:description" content="Suba um PDF, extraímos os valores, você tem um histórico.">
+  <title>Folio AI — Seus exames de sangue em um lugar só</title>
+  <meta name="description" content="Organize seus exames de sangue e laboratoriais em um histórico pessoal. Suba o PDF, o Folio AI extrai os valores e monta sua linha do tempo para a próxima consulta. Sem diagnósticos, só organização.">
+  <meta name="keywords" content="organizar exames de sangue, histórico de exames, guardar exames laboratoriais, exames PDF, linha do tempo de saúde, resultados de laboratório, Fleury, Sabin, Dasa, Hermes Pardini, biomarcadores, arquivo de saúde pessoal">
+  <meta name="author" content="Folio AI">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <link rel="canonical" href="https://folioai.com.br/">
+
+  <!-- Language / geo targeting: Brasil -->
+  <meta name="language" content="Portuguese">
+  <meta http-equiv="content-language" content="pt-BR">
+  <meta name="geo.region" content="BR">
+  <meta name="geo.placename" content="Brasil">
+  <meta name="geo.position" content="-14.235;-51.9253">
+  <meta name="ICBM" content="-14.235, -51.9253">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Folio AI — Seus exames de sangue em um lugar só">
+  <meta property="og:description" content="Suba um PDF, a gente extrai os valores, e seu histórico fica organizado para a próxima consulta. Sem diagnósticos, só organização.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://folioai.com.br">
+  <meta property="og:url" content="https://folioai.com.br/">
+  <meta property="og:site_name" content="Folio AI">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:image" content="https://folioai.com.br/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:alt" content="Folio AI — histórico de exames organizado em uma linha do tempo">
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Folio AI — Seus exames de sangue em um lugar só">
+  <meta name="twitter:description" content="Suba um PDF, a gente extrai os valores, e seu histórico fica organizado para a próxima consulta.">
+  <meta name="twitter:image" content="https://folioai.com.br/og-image.png">
+  <meta name="twitter:image:alt" content="Folio AI — histórico de exames organizado em uma linha do tempo">
+
   <meta name="theme-color" content="#19276a">
-  <meta name="robots" content="index, follow">
+
+  <!-- Icons -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/favicon.svg">
+  <link rel="manifest" href="/site.webmanifest">
 
   <!-- General Sans via Fontshare -->
   <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+  <link rel="dns-prefetch" href="https://folio-ia.app">
   <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap">
 
 
@@ -991,6 +1026,87 @@
     .form-submit     { width: 100%; }
   }
   </style>
+
+  <!-- Structured data (Schema.org / JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://folioai.com.br/#organization",
+        "name": "Folio AI",
+        "url": "https://folioai.com.br/",
+        "logo": "https://folioai.com.br/og-image.png",
+        "description": "Arquivo de saúde pessoal que organiza exames de sangue e laboratoriais em um histórico cronológico.",
+        "areaServed": {
+          "@type": "Country",
+          "name": "Brasil"
+        },
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "email": "privacy@folio-ia.app",
+          "contactType": "privacy",
+          "availableLanguage": ["Portuguese"]
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://folioai.com.br/#website",
+        "url": "https://folioai.com.br/",
+        "name": "Folio AI",
+        "description": "Seus exames de sangue em um lugar só.",
+        "inLanguage": "pt-BR",
+        "publisher": { "@id": "https://folioai.com.br/#organization" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://folioai.com.br/#webpage",
+        "url": "https://folioai.com.br/",
+        "name": "Folio AI — Seus exames de sangue em um lugar só",
+        "description": "Organize seus exames de sangue e laboratoriais em um histórico pessoal. Suba o PDF, o Folio AI extrai os valores e monta sua linha do tempo para a próxima consulta.",
+        "inLanguage": "pt-BR",
+        "isPartOf": { "@id": "https://folioai.com.br/#website" },
+        "about": { "@id": "https://folioai.com.br/#software" }
+      },
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://folioai.com.br/#software",
+        "name": "Folio AI",
+        "url": "https://folio-ia.app",
+        "applicationCategory": "HealthApplication",
+        "operatingSystem": "Web, iOS, Android",
+        "inLanguage": "pt-BR",
+        "description": "Suba um PDF, o Folio AI extrai os valores dos seus exames, organiza cronologicamente e visualiza tendências. Não interpreta resultados nem dá conselho médico — só organização.",
+        "areaServed": {
+          "@type": "Country",
+          "name": "Brasil"
+        },
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "BRL"
+        },
+        "publisher": { "@id": "https://folioai.com.br/#organization" }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://folioai.com.br/#faq",
+        "inLanguage": "pt-BR",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Meus exames ficam seguros? E se vazarem?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Você é o dono do arquivo e a Folio é o cofre. Tudo é criptografado em trânsito (HTTPS/TLS) e em repouso (AES-256), armazenado no Supabase sobre infraestrutura AWS com certificação SOC 2 Type 2. A IA (Google Gemini) recebe o PDF para extrair os valores, devolve os dados estruturados e não retém nem treina modelo com o seu conteúdo. O acesso é isolado por conta e, pela LGPD, você pode pedir acesso, correção ou exclusão dos seus dados a qualquer momento."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
 
