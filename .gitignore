@@ -1,1 +1,4 @@
-.claude/
+# Ignore local Claude settings, but track committed skills
+.claude/*
+!.claude/skills/
+!.claude/skills/**
