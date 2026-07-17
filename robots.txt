@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://folioai.com.br/sitemap.xml
+Sitemap: https://landing.folio-ai.app/sitemap.xml
