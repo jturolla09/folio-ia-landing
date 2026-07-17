@@ -1,0 +1,32 @@
+# Folio AI
+
+> O Folio AI organiza exames de sangue e laboratoriais enviados em PDF em um histórico cronológico pessoal.
+
+## URLs oficiais
+
+- Landing page: https://landing.folio-ai.app/
+- Aplicativo: https://folio-ai.app/
+- Política de Privacidade: https://landing.folio-ai.app/privacy-policy.html
+- Termos de Uso: https://landing.folio-ai.app/terms-of-service.html
+
+## O que o produto faz
+
+- Extrai valores disponíveis em arquivos PDF de exames laboratoriais.
+- Organiza resultados e biomarcadores em uma linha do tempo.
+- Ajuda o usuário a levar um histórico organizado para consultas.
+
+## Limites do produto
+
+- Não realiza diagnósticos.
+- Não interpreta resultados médicos.
+- Não substitui profissionais de saúde.
+- Não oferece aconselhamento médico.
+
+## Idioma e público
+
+- Idioma principal: português do Brasil (pt-BR).
+- Área atendida: Brasil.
+
+## Contato
+
+- Privacidade e dados pessoais: privacy@folio-ia.app
