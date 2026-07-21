@@ -192,6 +192,7 @@
      HERO
   ============================================================ */
   .hero {
+    position: relative;
     min-height: 100svh;
     padding-top:    clamp(100px, 14vh, 140px);
     padding-bottom: clamp(60px, 8vh, 100px);
@@ -241,6 +242,44 @@
     max-width: 46ch;
     margin-bottom: 40px;
   }
+
+  .scroll-cue {
+    position: absolute;
+    left: 50%;
+    bottom: clamp(20px, 4vh, 36px);
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--on-cobalt-dim);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition:
+      opacity 0.4s var(--ease-out-quart),
+      color 0.2s var(--ease-out-quart);
+  }
+  .scroll-cue:hover { color: var(--on-cobalt); }
+
+  .scroll-cue-chevron {
+    width: 12px;
+    height: 12px;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg);
+    animation: scroll-cue-bounce 1.8s var(--ease-out-quart) infinite;
+  }
+
+  @keyframes scroll-cue-bounce {
+    0%, 100% { transform: rotate(45deg) translate(0, 0);   opacity: 0.7; }
+    50%      { transform: rotate(45deg) translate(4px, 4px); opacity: 1; }
+  }
+
+  /* fade the cue out once the hero is scrolled past */
+  .scroll-cue.is-hidden { opacity: 0; pointer-events: none; }
 
   /* ============================================================
      WAITLIST FORM
@@ -1002,6 +1041,7 @@
   @media (prefers-reduced-motion: reduce) {
     [data-reveal] { opacity: 1; transform: none; transition: none; }
     html { scroll-behavior: auto; }
+    .scroll-cue-chevron { animation: none; }
   }
 
   /* ============================================================
@@ -1023,6 +1063,7 @@
     .footer-meta     { flex-direction: column; gap: 16px; align-items: flex-start; }
     .form-row        { flex-direction: column; }
     .form-submit     { width: 100%; }
+    .scroll-cue-text { display: none; }
   }
   </style>
 
@@ -1251,6 +1292,12 @@
             </div>
           </div>
         </div>
+
+        <!-- Scroll cue -->
+        <a class="scroll-cue" href="#beat1-h" aria-label="Ver mais" data-reveal data-delay="3">
+          <span class="scroll-cue-text">Role para ver como funciona</span>
+          <span class="scroll-cue-chevron" aria-hidden="true"></span>
+        </a>
 
       </div>
     </section>
@@ -1588,12 +1635,15 @@
   (function () {
     'use strict';
 
-    // Nav scroll state
-    var nav    = document.querySelector('.nav');
-    var heroEl = document.querySelector('.hero');
+    // Nav scroll state + scroll cue visibility
+    var nav       = document.querySelector('.nav');
+    var heroEl    = document.querySelector('.hero');
+    var scrollCue = document.querySelector('.scroll-cue');
     if (nav && heroEl) {
       new IntersectionObserver(function (entries) {
-        nav.classList.toggle('nav--scrolled', !entries[0].isIntersecting);
+        var scrolledPast = !entries[0].isIntersecting;
+        nav.classList.toggle('nav--scrolled', scrolledPast);
+        if (scrollCue) scrollCue.classList.toggle('is-hidden', scrolledPast);
       }, { threshold: 0 }).observe(heroEl);
     }
 
