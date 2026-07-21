@@ -1140,7 +1140,7 @@
     <a href="/" class="nav-logo" aria-label="Folio AI — página inicial">
       Folio <span>AI</span>
     </a>
-    <a href="https://folio-ai.app" class="nav-cta" target="_blank" rel="noopener">Usar o app</a>
+    <a href="https://folio-ai.app" class="nav-cta" target="_blank" rel="noopener" data-va-cta="use-app" data-va-location="nav">Usar o app</a>
   </nav>
 
   <main id="main">
@@ -1162,7 +1162,7 @@
 
           <div data-reveal data-delay="3">
             <div class="form-row">
-              <a href="https://folio-ai.app" class="form-submit" target="_blank" rel="noopener">Usar o app grátis</a>
+              <a href="https://folio-ai.app" class="form-submit" target="_blank" rel="noopener" data-va-cta="use-app" data-va-location="hero">Usar o app grátis</a>
             </div>
             <p class="form-trust">
               Gratuito durante a beta. Sem cartão de crédito.
@@ -1562,7 +1562,7 @@
 
           <div class="footer-cta-form" data-reveal data-delay="1">
             <div class="form-row">
-              <a href="https://folio-ai.app" class="form-submit" target="_blank" rel="noopener">Usar o app grátis</a>
+              <a href="https://folio-ai.app" class="form-submit" target="_blank" rel="noopener" data-va-cta="use-app" data-va-location="footer">Usar o app grátis</a>
             </div>
             <p class="form-trust">
               Gratuito durante a beta. Conforme LGPD.
@@ -1628,6 +1628,16 @@
     window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
   </script>
   <script defer src="/_vercel/insights/script.js"></script>
+  <script>
+    document.addEventListener('click', function (e) {
+      var el = e.target.closest('[data-va-cta="use-app"]');
+      if (!el) return;
+      window.va('event', {
+        name: 'use-app-click',
+        location: el.getAttribute('data-va-location') || 'unknown'
+      });
+    });
+  </script>
 
 </body>
 </html>
