@@ -658,7 +658,10 @@
   /* ============================================================
      SECTION / BEAT SHARED
   ============================================================ */
-  .section { padding-block: clamp(80px, 10vh, 130px); }
+  .section {
+    padding-block: clamp(80px, 10vh, 130px);
+    scroll-margin-top: 88px;
+  }
 
   .beat-rule {
     border: none;
@@ -1294,7 +1297,7 @@
         </div>
 
         <!-- Scroll cue -->
-        <a class="scroll-cue" href="#beat1-h" aria-label="Ver mais" data-reveal data-delay="3">
+        <a class="scroll-cue" href="#extraction" aria-label="Ver mais" data-reveal data-delay="3">
           <span class="scroll-cue-text">Role para ver como funciona</span>
           <span class="scroll-cue-chevron" aria-hidden="true"></span>
         </a>
@@ -1305,7 +1308,7 @@
     <!-- ==================== BEAT 1: EXTRACTION ==================== -->
     <hr class="beat-rule" aria-hidden="true">
 
-    <section class="section paper-surface" aria-labelledby="beat1-h">
+    <section id="extraction" class="section paper-surface" aria-labelledby="beat1-h">
       <div class="grid">
         <div class="beat-split">
 
