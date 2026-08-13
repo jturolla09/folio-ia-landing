@@ -73,5 +73,27 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    { "source": "/auth", "destination": "https://folio-ai.lovable.app/auth", "permanent": false },
+    { "source": "/auth/:path*", "destination": "https://folio-ai.lovable.app/auth/:path*", "permanent": false },
+    { "source": "/reset-password", "destination": "https://folio-ai.lovable.app/reset-password", "permanent": false },
+    { "source": "/verify-email", "destination": "https://folio-ai.lovable.app/verify-email", "permanent": false },
+    { "source": "/unsubscribe", "destination": "https://folio-ai.lovable.app/unsubscribe", "permanent": false },
+    { "source": "/checkout/:path*", "destination": "https://folio-ai.lovable.app/checkout/:path*", "permanent": false },
+    { "source": "/.lovable/:path*", "destination": "https://folio-ai.lovable.app/.lovable/:path*", "permanent": false },
+    { "source": "/exams", "destination": "https://folio-ai.lovable.app/exams", "permanent": false },
+    { "source": "/exams/:path*", "destination": "https://folio-ai.lovable.app/exams/:path*", "permanent": false },
+    { "source": "/exam/:path*", "destination": "https://folio-ai.lovable.app/exam/:path*", "permanent": false },
+    { "source": "/metrics", "destination": "https://folio-ai.lovable.app/metrics", "permanent": false },
+    { "source": "/upload", "destination": "https://folio-ai.lovable.app/upload", "permanent": false },
+    { "source": "/settings", "destination": "https://folio-ai.lovable.app/settings", "permanent": false },
+    { "source": "/coach", "destination": "https://folio-ai.lovable.app/coach", "permanent": false },
+    { "source": "/plans", "destination": "https://folio-ai.lovable.app/plans", "permanent": false },
+    { "source": "/help", "destination": "https://folio-ai.lovable.app/help", "permanent": false },
+    { "source": "/account", "destination": "https://folio-ai.lovable.app/account", "permanent": false },
+    { "source": "/privacy-policy", "destination": "/privacy-policy.html", "permanent": true },
+    { "source": "/terms-of-service", "destination": "/terms-of-service.html", "permanent": true },
+    { "source": "/account-deletion", "destination": "/account-deletion.html", "permanent": true }
   ]
 }
