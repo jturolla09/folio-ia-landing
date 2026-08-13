@@ -75,6 +75,12 @@
     }
   ],
   "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "app.folio-ai.app" }],
+      "destination": "https://folio-ai.lovable.app/:path*",
+      "permanent": false
+    },
     { "source": "/auth", "destination": "https://folio-ai.lovable.app/auth", "permanent": false },
     { "source": "/auth/:path*", "destination": "https://folio-ai.lovable.app/auth/:path*", "permanent": false },
     { "source": "/reset-password", "destination": "https://folio-ai.lovable.app/reset-password", "permanent": false },
