@@ -76,6 +76,12 @@
   ],
   "redirects": [
     {
+      "source": "/",
+      "has": [{ "type": "host", "value": "app.folio-ai.app" }],
+      "destination": "https://folio-ai.lovable.app/",
+      "permanent": false
+    },
+    {
       "source": "/:path*",
       "has": [{ "type": "host", "value": "app.folio-ai.app" }],
       "destination": "https://folio-ai.lovable.app/:path*",
