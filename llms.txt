@@ -4,10 +4,10 @@
 
 ## URLs oficiais
 
-- Landing page: https://landing.folio-ai.app/
-- Aplicativo: https://folio-ai.app/
-- Política de Privacidade: https://landing.folio-ai.app/privacy-policy.html
-- Termos de Uso: https://landing.folio-ai.app/terms-of-service.html
+- Landing page: https://folio-ai.app/
+- Aplicativo: https://app.folio-ai.app/
+- Política de Privacidade: https://folio-ai.app/privacy-policy.html
+- Termos de Uso: https://folio-ai.app/terms-of-service.html
 
 ## O que o produto faz
 
