@@ -1,4 +1,9 @@
 User-agent: *
 Allow: /
+Disallow: /auth
+Disallow: /reset-password
+Disallow: /verify-email
+Disallow: /unsubscribe
+Disallow: /checkout
 
-Sitemap: https://landing.folio-ai.app/sitemap.xml
+Sitemap: https://folio-ai.app/sitemap.xml
