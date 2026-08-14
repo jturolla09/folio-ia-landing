@@ -404,6 +404,31 @@
   }
   .form-trust a:hover { color: var(--on-cobalt); }
 
+  .platforms {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+    list-style: none;
+  }
+  .platform {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+    padding: 5px 10px;
+    border: 1px solid oklch(0.42 0.12 264 / 0.45);
+    border-radius: 999px;
+    font-size: 0.7rem;
+    color: var(--on-cobalt-dim);
+    opacity: 0.72;
+  }
+  .platform--live {
+    opacity: 1;
+    border-color: oklch(0.62 0.14 148 / 0.45);
+  }
+  .platform-name { font-weight: 600; letter-spacing: 0.01em; }
+  .platform--live .platform-status { color: var(--ok); }
+
   /* ============================================================
      PHONE MOCKUP
   ============================================================ */
@@ -1072,6 +1097,11 @@
               <a href="/privacy-policy.html">Política de Privacidade</a>
               · <a href="/terms-of-service.html">Termos de Uso</a>.
             </p>
+            <ul class="platforms" aria-label="Disponibilidade por plataforma">
+              <li class="platform platform--live"><span class="platform-name">Web</span> <span class="platform-status">disponível</span></li>
+              <li class="platform"><span class="platform-name">Android</span> <span class="platform-status">em breve</span></li>
+              <li class="platform"><span class="platform-name">iOS</span> <span class="platform-status">em breve</span></li>
+            </ul>
           </div>
         </div>
 
