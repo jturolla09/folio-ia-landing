@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Folio AI — Seus exames de sangue em um lugar só</title>
-  <meta name="description" content="Organize exames de sangue em PDF e acompanhe seus biomarcadores em uma linha do tempo segura para levar à consulta. Grátis durante a beta.">
+  <title>Folio AI — Seus exames em um lugar só</title>
+  <meta name="description" content="Organize exames de sangue, bioimpedância e imagem em PDF e acompanhe seus biomarcadores numa linha do tempo para levar à consulta.">
   <meta name="author" content="Folio AI">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <link rel="canonical" href="https://folio-ai.app/">
@@ -21,7 +21,7 @@
   <meta name="ICBM" content="-14.235, -51.9253">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Folio AI — Seus exames de sangue em um lugar só">
+  <meta property="og:title" content="Folio AI — Seus exames em um lugar só">
   <meta property="og:description" content="Suba um PDF, a gente extrai os valores, e seu histórico fica organizado para a próxima consulta. Sem diagnósticos, só organização.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://folio-ai.app/">
@@ -35,7 +35,7 @@
 
   <!-- Twitter / X -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Folio AI — Seus exames de sangue em um lugar só">
+  <meta name="twitter:title" content="Folio AI — Seus exames em um lugar só">
   <meta name="twitter:description" content="Suba um PDF, a gente extrai os valores, e seu histórico fica organizado para a próxima consulta.">
   <meta name="twitter:image" content="https://folio-ai.app/og-image.png">
   <meta name="twitter:image:alt" content="Folio AI — histórico de exames organizado em uma linha do tempo">
@@ -391,6 +391,7 @@
   .ep-result-right { display: flex; align-items: center; gap: 10px; }
 
   .form-trust {
+    margin-top: 12px;
     font-size: 0.75rem;
     color: var(--on-cobalt-dim);
     line-height: 1.55;
@@ -402,6 +403,31 @@
     text-underline-offset: 2px;
   }
   .form-trust a:hover { color: var(--on-cobalt); }
+
+  .platforms {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+    list-style: none;
+  }
+  .platform {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+    padding: 5px 10px;
+    border: 1px solid oklch(0.42 0.12 264 / 0.45);
+    border-radius: 999px;
+    font-size: 0.7rem;
+    color: var(--on-cobalt-dim);
+    opacity: 0.72;
+  }
+  .platform--live {
+    opacity: 1;
+    border-color: oklch(0.62 0.14 148 / 0.45);
+  }
+  .platform-name { font-weight: 600; letter-spacing: 0.01em; }
+  .platform--live .platform-status { color: var(--ok); }
 
   /* ============================================================
      PHONE MOCKUP
@@ -944,7 +970,7 @@
         "name": "Folio AI",
         "url": "https://folio-ai.app/",
         "logo": "https://folio-ai.app/og-image.png",
-        "description": "Arquivo de saúde pessoal que organiza exames de sangue e laboratoriais em um histórico cronológico.",
+        "description": "Arquivo de saúde pessoal que organiza exames de sangue, bioimpedância e imagem em um histórico cronológico.",
         "areaServed": {
           "@type": "Country",
           "name": "Brasil"
@@ -961,7 +987,7 @@
         "@id": "https://folio-ai.app/#website",
         "url": "https://folio-ai.app/",
         "name": "Folio AI",
-        "description": "Seus exames de sangue em um lugar só.",
+        "description": "Seus exames em um lugar só.",
         "inLanguage": "pt-BR",
         "publisher": { "@id": "https://folio-ai.app/#organization" }
       },
@@ -969,8 +995,8 @@
         "@type": "WebPage",
         "@id": "https://folio-ai.app/#webpage",
         "url": "https://folio-ai.app/",
-        "name": "Folio AI — Seus exames de sangue em um lugar só",
-        "description": "Organize exames de sangue em PDF e acompanhe seus biomarcadores em uma linha do tempo segura para levar à consulta.",
+        "name": "Folio AI — Seus exames em um lugar só",
+        "description": "Organize exames de sangue, bioimpedância e imagem em PDF e acompanhe seus biomarcadores em uma linha do tempo segura para levar à consulta.",
         "inLanguage": "pt-BR",
         "isPartOf": { "@id": "https://folio-ai.app/#website" },
         "about": { "@id": "https://folio-ai.app/#software" }
@@ -987,11 +1013,6 @@
         "areaServed": {
           "@type": "Country",
           "name": "Brasil"
-        },
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "BRL"
         },
         "publisher": { "@id": "https://folio-ai.app/#organization" }
       },
@@ -1021,7 +1042,7 @@
             "name": "Quais arquivos posso enviar?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Você pode enviar arquivos PDF de exames laboratoriais. O Folio AI identifica os valores disponíveis no documento e os organiza automaticamente no seu histórico."
+              "text": "Você pode enviar PDFs de exames de sangue e de bioimpedância — o Folio AI identifica os valores disponíveis no documento e os organiza automaticamente no seu histórico. Exames de imagem podem ser guardados no seu arquivo, com o laudo vinculado depois."
             }
           },
           {
@@ -1029,7 +1050,7 @@
             "name": "O Folio AI é gratuito?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Sim. O Folio AI está gratuito durante a fase beta e não exige cartão de crédito para começar."
+              "text": "O Folio AI tem um plano gratuito para começar a organizar seus exames e planos pagos com recursos adicionais. Você pode ver as opções dentro do app."
             }
           }
         ]
@@ -1060,7 +1081,7 @@
           <span class="hero-eyebrow" data-reveal>Disponível agora</span>
 
           <h1 class="hero-headline" id="hero-headline" data-reveal data-delay="1">
-            Seus exames de sangue,<br>em <em>um lugar</em> só.
+            Seus exames,<br>em <em>um lugar</em> só.
           </h1>
 
           <p class="hero-sub" data-reveal data-delay="2">
@@ -1069,13 +1090,18 @@
 
           <div data-reveal data-delay="3">
             <div class="form-row">
-              <a href="https://app.folio-ai.app" class="form-submit" target="_blank" rel="noopener" data-va-cta="use-app" data-va-location="hero">Usar o app grátis</a>
+              <a href="https://app.folio-ai.app" class="form-submit" target="_blank" rel="noopener" data-va-cta="use-app" data-va-location="hero">Usar o app agora</a>
             </div>
             <p class="form-trust">
-              Gratuito durante a beta. Sem cartão de crédito.
+              Plano gratuito para começar.
               <a href="/privacy-policy.html">Política de Privacidade</a>
               · <a href="/terms-of-service.html">Termos de Uso</a>.
             </p>
+            <ul class="platforms" aria-label="Disponibilidade por plataforma">
+              <li class="platform platform--live"><span class="platform-name">Web</span> <span class="platform-status">disponível</span></li>
+              <li class="platform"><span class="platform-name">Android</span> <span class="platform-status">em breve</span></li>
+              <li class="platform"><span class="platform-name">iOS</span> <span class="platform-status">em breve</span></li>
+            </ul>
           </div>
         </div>
 
@@ -1431,7 +1457,7 @@
                   Quais arquivos posso enviar?
                 </summary>
                 <div class="faq-a">
-                  <p>Você pode enviar arquivos PDF de exames laboratoriais. O Folio AI identifica os valores disponíveis no documento e os organiza automaticamente no seu histórico.</p>
+                  <p>Você pode enviar PDFs de exames de sangue e de bioimpedância — o Folio AI identifica os valores disponíveis no documento e os organiza automaticamente no seu histórico. Exames de imagem podem ser guardados no seu arquivo, com o laudo vinculado depois.</p>
                 </div>
               </details>
             </li>
@@ -1441,7 +1467,7 @@
                   O Folio AI é gratuito?
                 </summary>
                 <div class="faq-a">
-                  <p>Sim. O Folio AI está gratuito durante a fase beta e não exige cartão de crédito para começar.</p>
+                  <p>O Folio AI tem um plano gratuito para começar a organizar seus exames e planos pagos com recursos adicionais. Você pode ver as opções dentro do app.</p>
                 </div>
               </details>
             </li>
@@ -1456,7 +1482,7 @@
 
         <div class="footer-cta-inner">
           <div class="footer-cta-copy">
-            <h2 id="cta-h" data-reveal>Comece agora. É grátis.</h2>
+            <h2 id="cta-h" data-reveal>Comece agora. Grátis para começar.</h2>
             <p data-reveal data-delay="1">
               Sem cadastro complicado, sem cartão de crédito. Sobe seu primeiro exame em menos de um minuto.
             </p>
@@ -1464,10 +1490,10 @@
 
           <div class="footer-cta-form" data-reveal data-delay="1">
             <div class="form-row">
-              <a href="https://app.folio-ai.app" class="form-submit" target="_blank" rel="noopener" data-va-cta="use-app" data-va-location="footer">Usar o app grátis</a>
+              <a href="https://app.folio-ai.app" class="form-submit" target="_blank" rel="noopener" data-va-cta="use-app" data-va-location="footer">Usar o app agora</a>
             </div>
             <p class="form-trust">
-              Gratuito durante a beta. Conforme LGPD.
+              Plano gratuito para começar. Conforme LGPD.
             </p>
           </div>
         </div>

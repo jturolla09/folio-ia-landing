@@ -1,7 +1,7 @@
 {
   "name": "Folio AI — Seus exames em um lugar só",
   "short_name": "Folio AI",
-  "description": "Arquivo de saúde pessoal: organize seus exames de sangue e laboratoriais em um histórico cronológico.",
+  "description": "Arquivo de saúde pessoal: organize seus exames de sangue, bioimpedância e imagem em um histórico cronológico.",
   "lang": "pt-BR",
   "start_url": "/",
   "scope": "/",

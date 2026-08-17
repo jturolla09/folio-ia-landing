@@ -1,6 +1,6 @@
 # Folio AI
 
-> O Folio AI organiza exames de sangue e laboratoriais enviados em PDF em um histórico cronológico pessoal.
+> O Folio AI organiza exames de sangue, bioimpedância e imagem enviados em PDF em um histórico cronológico pessoal.
 
 ## URLs oficiais
 
@@ -11,7 +11,8 @@
 
 ## O que o produto faz
 
-- Extrai valores disponíveis em arquivos PDF de exames laboratoriais.
+- Extrai valores disponíveis em PDFs de exames de sangue e de bioimpedância.
+- Guarda exames de imagem no arquivo, com o laudo vinculado depois.
 - Organiza resultados e biomarcadores em uma linha do tempo.
 - Ajuda o usuário a levar um histórico organizado para consultas.
 
