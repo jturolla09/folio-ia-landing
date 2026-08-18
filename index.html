@@ -106,6 +106,23 @@
   input  { font-family: inherit; }
 
   /* ============================================================
+     GRAIN OVERLAY
+     Fixed (not attached to a scrolling container) so it never
+     repaints on scroll -- keeps mid-range Android smooth.
+  ============================================================ */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 5;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 180px 180px;
+    opacity: 0.035;
+  }
+
+  /* ============================================================
      SKIP LINK
   ============================================================ */
   .skip-link {
@@ -190,9 +207,21 @@
   ============================================================ */
   .hero {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     min-height: 100svh;
     padding-top:    clamp(100px, 14vh, 140px);
     padding-bottom: clamp(60px, 8vh, 100px);
+    /* Scoped override of .cobalt-surface's background-image: same two
+       ambient gradients, plus a third anchored behind the phone mockup
+       (right side, vertically centered) so the screenshot reads as lit
+       rather than pasted on. Kept out of .cobalt-surface itself since
+       that class is shared with beat-2 and the footer. */
+    background-image:
+      radial-gradient(ellipse 50% 55% at 84% 52%, oklch(0.36 0.12 264 / 0.7) 0%, transparent 72%),
+      radial-gradient(ellipse 60% 50% at 5% 30%,  oklch(0.22 0.08 264 / 0.6) 0%, transparent 100%),
+      radial-gradient(ellipse 40% 40% at 90% 10%,  oklch(0.10 0.04 256 / 0.8) 0%, transparent 100%);
   }
 
   .hero-inner {
@@ -200,9 +229,9 @@
     row-gap: clamp(40px, 6vw, 64px);
   }
 
-  .hero-copy        { grid-column: 1 / 8; }
+  .hero-copy        { grid-column: 1 / 7; }
   .hero-phone-wrap  {
-    grid-column: 8 / 13;
+    grid-column: 9 / 13;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -433,7 +462,8 @@
      PHONE MOCKUP
   ============================================================ */
   .phone-shell {
-    width: 270px;
+    --phone-w: min(clamp(280px, 8vw + 216px, 332px), 30vh);
+    width: var(--phone-w);
     background: oklch(0.09 0.02 264);
     border-radius: 48px;
     position: relative;
@@ -446,10 +476,10 @@
 
   .phone-island {
     position: absolute;
-    top: 14px;
+    top: calc(var(--phone-w) * 0.0519);
     left: 50%;
     transform: translateX(-50%);
-    width: 90px; height: 28px;
+    width: calc(var(--phone-w) * 0.3333); height: calc(var(--phone-w) * 0.1037);
     background: oklch(0.06 0.01 264);
     border-radius: 14px;
     z-index: 10;
@@ -457,90 +487,13 @@
 
   .phone-screen {
     overflow: hidden;
-    background: var(--paper);
-    height: 540px;
+    background: oklch(0.972 0.005 264); /* matches the app screenshot background, cooler than --paper */
     display: flex;
     flex-direction: column;
-    padding-top: 54px;
+    padding-top: calc(var(--phone-w) * 0.2);
   }
 
-  /* ===== ORIGINAL APP SCREEN: HOME ===== */
-  .screen-home { background: var(--paper); display: flex; flex-direction: column; height: 100%; }
-
-  .app-header {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 10px 12px 8px;
-    background: oklch(0.99 0.004 264);
-    border-bottom: 1px solid var(--paper-border);
-    flex-shrink: 0;
-  }
-  .app-header-logo { display: flex; align-items: center; gap: 5px; }
-  .app-logo-mark {
-    width: 18px; height: 18px;
-    background: var(--cobalt-accent);
-    border-radius: 5px;
-    display: flex; align-items: center; justify-content: center;
-    padding: 3px;
-  }
-  .app-logo-mark svg { width: 100%; height: 100%; }
-  .app-logo-text { font-size: 0.6rem; font-weight: 700; color: var(--ink); letter-spacing: -0.01em; }
-  .app-header-avatar {
-    width: 22px; height: 22px; border-radius: 50%;
-    background: var(--cobalt-accent);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 0.42rem; font-weight: 700; color: white;
-  }
-
-  .home-hero-band {
-    background-color: var(--cobalt-accent);
-    background-image: radial-gradient(ellipse 100% 150% at 50% 0%, oklch(0.62 0.18 264) 0%, transparent 100%);
-    padding: 12px;
-    flex-shrink: 0;
-  }
-  .home-hero-top {
-    display: flex; align-items: flex-start; justify-content: space-between;
-    margin-bottom: 10px;
-  }
-  .home-greeting { font-size: 0.58rem; font-weight: 700; color: white; margin-bottom: 2px; }
-  .home-sub      { font-size: 0.44rem; color: rgba(255,255,255,0.7); }
-  .home-initials {
-    width: 22px; height: 22px; border-radius: 50%;
-    background: rgba(255,255,255,0.2);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 0.38rem; font-weight: 700; color: white;
-  }
-  .home-chips { display: flex; gap: 5px; }
-  .home-chip {
-    display: flex; align-items: center; gap: 4px;
-    background: rgba(255,255,255,0.15);
-    border-radius: 12px; padding: 4px 8px;
-  }
-  .home-chip-val   { font-size: 0.65rem; font-weight: 700; color: white; }
-  .home-chip-val.warn { color: #fde68a; }
-  .home-chip-label { font-size: 0.38rem; color: rgba(255,255,255,0.65); }
-
-  .page-content { flex: 1; padding: 8px; overflow: hidden; }
-  .section-label {
-    font-size: 0.42rem; font-weight: 600; letter-spacing: 0.08em;
-    text-transform: uppercase; color: var(--ink-soft);
-    padding: 0 2px; margin-bottom: 6px;
-  }
-  .recent-card {
-    display: flex; align-items: center; gap: 7px;
-    padding: 7px 9px; background: white;
-    border-radius: 8px; margin-bottom: 4px;
-    border: 1px solid var(--paper-border);
-  }
-  .recent-dot {
-    width: 6px; height: 6px; border-radius: 50%;
-    background: var(--ok); flex-shrink: 0;
-  }
-  .recent-name { font-size: 0.5rem; font-weight: 600; color: var(--ink); margin-bottom: 1px; }
-  .recent-lab  { font-size: 0.42rem; color: var(--ink-soft); }
-  .recent-badge {
-    margin-left: auto; font-size: 0.4rem; font-weight: 600;
-    color: var(--ink-soft); white-space: nowrap;
-  }
+  .phone-screenshot { display: block; width: 100%; height: auto; }
 
   .beat-split .beat-inner { grid-column: auto; }
 
@@ -1110,77 +1063,7 @@
           <div class="phone-shell">
             <div class="phone-island"></div>
             <div class="phone-screen">
-              <div class="screen-home">
-                <div class="app-header">
-                  <div class="app-header-logo">
-                    <div class="app-logo-mark">
-                      <svg fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                      </svg>
-                    </div>
-                    <span class="app-logo-text">Folio AI</span>
-                  </div>
-                  <div class="app-header-avatar">JT</div>
-                </div>
-                <div class="home-hero-band">
-                  <div class="home-hero-top">
-                    <div>
-                      <div class="home-greeting">Bom dia</div>
-                      <div class="home-sub">Resumo da sua saúde</div>
-                    </div>
-                    <div class="home-initials">JT</div>
-                  </div>
-                  <div class="home-chips">
-                    <div class="home-chip">
-                      <div class="home-chip-val">7</div>
-                      <div class="home-chip-label">exames</div>
-                    </div>
-                    <div class="home-chip">
-                      <div class="home-chip-val warn">2</div>
-                      <div class="home-chip-label">atenção</div>
-                    </div>
-                    <div class="home-chip">
-                      <div class="home-chip-val">24</div>
-                      <div class="home-chip-label">métricas</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="page-content">
-                  <div class="section-label">Exames Recentes</div>
-                  <div class="recent-card">
-                    <div class="recent-dot"></div>
-                    <div>
-                      <div class="recent-name">Exame de Sangue</div>
-                      <div class="recent-lab">Fleury · 15 mar. 2025</div>
-                    </div>
-                    <div class="recent-badge">15 mar</div>
-                  </div>
-                  <div class="recent-card">
-                    <div class="recent-dot" style="background:var(--warn)"></div>
-                    <div>
-                      <div class="recent-name">Colesterol e Triglicérides</div>
-                      <div class="recent-lab">Sabin · 03 nov. 2024</div>
-                    </div>
-                    <div class="recent-badge">03 nov</div>
-                  </div>
-                  <div class="recent-card">
-                    <div class="recent-dot"></div>
-                    <div>
-                      <div class="recent-name">Bioimpedância</div>
-                      <div class="recent-lab">02 fev. 2025</div>
-                    </div>
-                    <div class="recent-badge">02 fev</div>
-                  </div>
-                  <div class="recent-card">
-                    <div class="recent-dot"></div>
-                    <div>
-                      <div class="recent-name">Exame Ocular</div>
-                      <div class="recent-lab">20 jan. 2025</div>
-                    </div>
-                    <div class="recent-badge">20 jan</div>
-                  </div>
-                </div>
-              </div>
+              <img class="phone-screenshot" src="hero-app-home.webp" width="1080" height="2328" alt="" loading="eager" fetchpriority="high">
             </div>
           </div>
         </div>
@@ -1214,7 +1097,7 @@
           <div class="extraction-panel"
             data-reveal data-delay="1"
             role="img"
-            aria-label="Painel mostrando extração automática de um hemograma do Fleury com 12 valores identificados">
+            aria-label="Painel mostrando extração automática de um hemograma com 12 valores identificados">
             <div class="ep-topbar">
               <span class="ep-topbar-title">Extração de resultados</span>
               <span class="ep-topbar-sub">Folio AI</span>
@@ -1223,8 +1106,8 @@
               <div class="ep-file">
                 <div class="ep-file-icon">PDF</div>
                 <div>
-                  <div class="ep-file-name">hemograma_fleury_jan2025.pdf</div>
-                  <div class="ep-file-meta">284 KB · Fleury</div>
+                  <div class="ep-file-name">hemograma_jan2025.pdf</div>
+                  <div class="ep-file-meta">284 KB · PDF</div>
                 </div>
               </div>
               <div class="ep-status done">
@@ -1279,7 +1162,7 @@
             <div class="app-topbar">
               <span class="app-topbar-brand">Folio AI</span>
               <span class="app-topbar-crumb">Hemograma completo</span>
-              <span class="app-topbar-date">15 jan. 2025 · Fleury</span>
+              <span class="app-topbar-date">15 jan. 2025</span>
             </div>
             <div class="app-body">
               <div class="app-biomarkers">
