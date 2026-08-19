@@ -211,6 +211,7 @@
     flex-direction: column;
     justify-content: center;
     min-height: 100svh;
+    overflow: hidden;
     padding-top:    clamp(100px, 14vh, 140px);
     padding-bottom: clamp(60px, 8vh, 100px);
     /* Scoped override of .cobalt-surface's background-image: same two
@@ -230,11 +231,14 @@
   }
 
   .hero-copy        { grid-column: 1 / 7; }
-  .hero-phone-wrap  {
-    grid-column: 9 / 13;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+
+  /* Absolute overlay, not a grid item -- lets the phone cascade
+     bleed off the hero's bottom edge (clipped by .hero's own
+     overflow: hidden) instead of being constrained to a column. */
+  .hero-phone-wrap {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
   }
 
   .hero-eyebrow {
@@ -459,28 +463,34 @@
   .platform--live .platform-status { color: var(--ok); }
 
   /* ============================================================
-     PHONE MOCKUP
+     PHONE MOCKUP -- Z-axis cascade, double bezel, both phones
+     bleed off the bottom of the hero.
   ============================================================ */
-  .phone-shell {
-    --phone-w: min(clamp(280px, 8vw + 216px, 332px), 30vh);
+  .phone-outer-shell {
     width: var(--phone-w);
-    background: oklch(0.09 0.02 264);
-    border-radius: 48px;
+    padding: calc(var(--phone-w) * 0.022);
+    border-radius: calc(var(--phone-w) * 0.145);
+    border: 1px solid oklch(0.46 0.10 264 / 0.55);
+    background: oklch(0.10 0.025 264);
+  }
+
+  .phone-inner-core {
     position: relative;
     overflow: hidden;
+    border-radius: calc(var(--phone-w) * 0.145 - var(--phone-w) * 0.022);
+    background: oklch(0.09 0.02 264);
     box-shadow:
-      0 0 0 1px oklch(0.28 0.06 264 / 0.6),
-      0 40px 90px oklch(0.06 0.04 264 / 0.9),
-      0 8px 24px  oklch(0.06 0.04 264 / 0.5);
+      inset 0 1px 0 oklch(1 0 0 / 0.07),
+      inset 0 0 0 1px oklch(1 0 0 / 0.045);
   }
 
   .phone-island {
     position: absolute;
-    top: calc(var(--phone-w) * 0.0519);
+    top: calc(var(--phone-w) * 0.052);
     left: 50%;
     transform: translateX(-50%);
-    width: calc(var(--phone-w) * 0.3333); height: calc(var(--phone-w) * 0.1037);
-    background: oklch(0.06 0.01 264);
+    width: calc(var(--phone-w) * 0.333); height: calc(var(--phone-w) * 0.104);
+    background: oklch(0.05 0.01 264);
     border-radius: 14px;
     z-index: 10;
   }
@@ -494,6 +504,54 @@
   }
 
   .phone-screenshot { display: block; width: 100%; height: auto; }
+
+  /* Front phone: metrics screen, the eye-catcher, gets the full
+     diffused hue-tinted ambient shadow. hero-app-metrics.webp has
+     a list row running through asset y=1719.7 and a QA fixture
+     string at y=1770 -- the clip must land in the empty gap
+     between the chart card (bottom edge y~1568) and the "EXAMES
+     COM ESTE MARCADOR" card (top edge y~1588) instead of slicing
+     through either, so the cut reads as intentional background,
+     not a text accident. translateY(0.685 * --phone-w) lands the
+     lowest visible asset row at y~1577, centered in that gap --
+     verified against the rendered DOM, not just the arithmetic. */
+  .phone-front {
+    position: absolute;
+    right: clamp(20px, 7vw, 96px);
+    bottom: 0;
+    --phone-w: clamp(188px, 19vw, 258px);
+    width: var(--phone-w);
+    z-index: 3;
+    transform: translateY(calc(var(--phone-w) * 0.685));
+  }
+  .phone-front .phone-outer-shell {
+    box-shadow:
+      0 30px 60px -8px  oklch(0.20 0.09 264 / 0.55),
+      0 64px 120px -20px oklch(0.14 0.07 264 / 0.45),
+      0 8px 22px  oklch(0.26 0.08 264 / 0.32);
+  }
+
+  /* Back phone: home screen, visually subordinate -- smaller,
+     dimmed, offset up and to the left, gently rotated, partially
+     occluded by the front phone. hero-app-home.webp is clean
+     throughout, so its bleed amount is an aesthetic choice, not a
+     safety requirement. */
+  .phone-back {
+    position: absolute;
+    right: calc(clamp(20px, 7vw, 96px) + clamp(188px, 19vw, 258px) * 0.50);
+    bottom: calc(clamp(188px, 19vw, 258px) * 0.20);
+    --phone-w: calc(clamp(188px, 19vw, 258px) * 0.84);
+    width: var(--phone-w);
+    z-index: 2;
+    opacity: 0.6;
+    filter: saturate(0.72) brightness(0.8);
+    transform: rotate(-3.2deg) translateY(calc(var(--phone-w) * 0.32));
+  }
+  .phone-back .phone-outer-shell {
+    box-shadow:
+      0 20px 40px -6px oklch(0.16 0.07 264 / 0.4),
+      0 6px 16px  oklch(0.20 0.06 264 / 0.28);
+  }
 
   .beat-split .beat-inner { grid-column: auto; }
 
@@ -894,14 +952,39 @@
   ============================================================ */
   @media (max-width: 960px) {
     .hero-copy        { grid-column: 1 / -1; }
-    .hero-phone-wrap  { grid-column: 1 / -1; justify-content: flex-start; }
     .beat-inner       { grid-column: 1 / -1; }
     .beat-split       { grid-template-columns: 1fr; }
     .footer-cta-inner { grid-template-columns: 1fr; }
   }
 
+  /* Below 769px (variant A used 767px, but the copy block still
+     clips the phone by a few px at exactly 768px -- a common
+     tablet-portrait width -- so the guard is extended to cover
+     it), .hero's justify-content: center would drive
+     hero-copy straight into the bottom-anchored phone-front,
+     rendering the CTA, trust line and chips underneath it. Switch
+     to flex-start with a taller min-height so the copy clears the
+     phone, and shrink/recenter the front phone. The back phone is
+     dropped -- two phones don't fit narrow widths without crowding
+     the copy. This also means the phone is no longer hidden below
+     680px as it was before this cascade; it now stays visible,
+     smaller and centered, at every width. */
+  @media (max-width: 768px) {
+    .hero {
+      justify-content: flex-start;
+      min-height: calc(100svh + 120px);
+      padding-top: 96px;
+    }
+    .phone-back { display: none; }
+    .phone-front {
+      right: 50%;
+      --phone-w: clamp(190px, 54vw, 220px);
+      transform: translate(50%, calc(var(--phone-w) * 0.685));
+    }
+    .hero-copy { max-width: 34ch; }
+  }
+
   @media (max-width: 680px) {
-    .hero-phone-wrap { display: none; }
     .app-body        { grid-template-columns: 1fr; }
     .app-biomarkers  { border-right: none; border-bottom: 1px solid var(--paper-border); }
     .app-topbar-date { display: none; }
@@ -1058,22 +1141,36 @@
           </div>
         </div>
 
-        <!-- Phone -->
-        <div class="hero-phone-wrap" aria-hidden="true" data-reveal data-delay="2">
-          <div class="phone-shell">
-            <div class="phone-island"></div>
-            <div class="phone-screen">
-              <img class="phone-screenshot" src="hero-app-home.webp" width="1080" height="2328" alt="" loading="eager" fetchpriority="high">
-            </div>
-          </div>
-        </div>
-
         <!-- Scroll cue -->
         <a class="scroll-cue" href="#extraction" aria-label="Ver mais" data-reveal data-delay="3">
           <span class="scroll-cue-text">Role para ver como funciona</span>
           <span class="scroll-cue-chevron" aria-hidden="true"></span>
         </a>
 
+      </div>
+
+      <!-- Phones -->
+      <div class="hero-phone-wrap" aria-hidden="true" data-reveal data-delay="2">
+        <div class="phone-back">
+          <div class="phone-outer-shell">
+            <div class="phone-inner-core">
+              <div class="phone-island"></div>
+              <div class="phone-screen">
+                <img class="phone-screenshot" src="hero-app-home.webp" width="1080" height="2328" alt="" loading="eager">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="phone-front">
+          <div class="phone-outer-shell">
+            <div class="phone-inner-core">
+              <div class="phone-island"></div>
+              <div class="phone-screen">
+                <img class="phone-screenshot" src="hero-app-metrics.webp" width="1080" height="2328" alt="" loading="eager" fetchpriority="high">
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
