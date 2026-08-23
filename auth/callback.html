@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="referrer" content="no-referrer">
+    <title>Abrindo Folio</title>
+  </head>
+  <body>
+    <main>
+      <p>Abrindo o app Folio…</p>
+      <p><a id="open-folio" href="app.folioai.mobile://auth/callback">Abrir Folio</a></p>
+    </main>
+    <script>
+      (() => {
+        const callback = `app.folioai.mobile://auth/callback${window.location.search}${window.location.hash}`;
+        document.getElementById("open-folio").href = callback;
+        window.location.replace(callback);
+      })();
+    </script>
+  </body>
+</html>
