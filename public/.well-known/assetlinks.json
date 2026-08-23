@@ -1,0 +1,13 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.folioai.mobile",
+      "sha256_cert_fingerprints": [
+        "F7:E9:D5:99:65:67:8B:CD:93:A9:6B:09:80:D2:51:E6:DF:19:4A:F5:36:68:C7:57:2A:0F:6C:36:DF:2A:2D:CA",
+        "E5:B9:7F:08:14:B0:99:A8:4E:D4:1F:FD:5C:5B:04:C1:72:4A:0E:EB:A2:10:ED:A6:20:B6:58:C3:82:EA:0B:D6"
+      ]
+    }
+  }
+]

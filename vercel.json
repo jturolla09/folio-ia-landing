@@ -1,6 +1,15 @@
 {
   "headers": [
     {
+      "source": "/.well-known/assetlinks.json",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/json; charset=utf-8"
+        }
+      ]
+    },
+    {
       "source": "/(.*)",
       "headers": [
         {
@@ -82,7 +91,7 @@
       "permanent": false
     },
     {
-      "source": "/:path*",
+      "source": "/:path((?!\\.well-known/assetlinks\\.json$).*)",
       "has": [{ "type": "host", "value": "app.folio-ai.app" }],
       "destination": "https://folio-ai.lovable.app/:path*",
       "permanent": false
