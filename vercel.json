@@ -91,7 +91,7 @@
       "permanent": false
     },
     {
-      "source": "/:path((?!\\.well-known/assetlinks\\.json$).*)",
+      "source": "/:path((?!\\.well-known/assetlinks\\.json$|auth/callback$).*)",
       "has": [{ "type": "host", "value": "app.folio-ai.app" }],
       "destination": "https://folio-ai.lovable.app/:path*",
       "permanent": false
@@ -121,6 +121,11 @@
     {
       "source": "/auth/callback",
       "has": [{ "type": "host", "value": "folio-ai.app" }],
+      "destination": "/auth/callback.html"
+    },
+    {
+      "source": "/auth/callback",
+      "has": [{ "type": "host", "value": "app.folio-ai.app" }],
       "destination": "/auth/callback.html"
     }
   ]
