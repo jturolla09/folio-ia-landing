@@ -8,6 +8,8 @@
   <meta name="author" content="Folio AI">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <link rel="canonical" href="https://folio-ai.app/">
+  <link rel="alternate" hreflang="pt-BR" href="https://folio-ai.app/">
+  <link rel="alternate" hreflang="x-default" href="https://folio-ai.app/">
 
   <!-- Google Search Console verification (carried over from the app when the apex moved here) -->
   <meta name="google-site-verification" content="_a21iEagaZjHg03dkvmTKB6DInsm49NBQCvoe4wP3ng">
@@ -51,7 +53,10 @@
   <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
   <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
   <link rel="dns-prefetch" href="https://app.folio-ai.app">
-  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap">
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" media="print" onload="this.media='all'">
+  <noscript>
+    <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap">
+  </noscript>
 
 
   <style>
@@ -198,6 +203,9 @@
     color: var(--on-cobalt-dim);
     text-decoration: none;
     letter-spacing: 0.005em;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
     transition: color 0.15s;
   }
   .nav-cta:hover { color: var(--on-cobalt); }
@@ -419,7 +427,7 @@
     padding: 2px 7px; border-radius: 100px;
   }
   .ep-result-badge.ok   { background: var(--ok-bg);   color: oklch(0.42 0.14 148); }
-  .ep-result-badge.warn { background: var(--warn-bg);  color: oklch(0.48 0.15 56);  }
+  .ep-result-badge.warn { background: var(--low-bg);   color: oklch(0.40 0.12 240); }
 
   .ep-result-right { display: flex; align-items: center; gap: 10px; }
 
@@ -830,7 +838,7 @@
     flex-shrink: 0;
   }
   .bio-dot.ok   { background: var(--ok); }
-  .bio-dot.warn { background: var(--warn); }
+  .bio-dot.warn { background: var(--low); }
   .bio-dot.low  { background: var(--low); }
 
   .bio-name {
@@ -860,7 +868,7 @@
     white-space: nowrap;
   }
   .bio-badge.ok   { background: var(--ok-bg);   color: oklch(0.42 0.14 148); }
-  .bio-badge.warn { background: var(--warn-bg);  color: oklch(0.48 0.15 56);  }
+  .bio-badge.warn { background: var(--low-bg);   color: oklch(0.40 0.12 240); }
   .bio-badge.low  { background: var(--low-bg);   color: oklch(0.40 0.12 240); }
 
   .app-chart { padding: 24px; }
@@ -1041,15 +1049,12 @@
         "url": "https://folio-ai.app/",
         "logo": "https://folio-ai.app/og-image.png",
         "description": "Arquivo de saúde pessoal que organiza exames de sangue, bioimpedância e imagem em um histórico cronológico.",
-        "areaServed": {
-          "@type": "Country",
-          "name": "Brasil"
-        },
+        "areaServed": "BR",
         "contactPoint": {
           "@type": "ContactPoint",
           "email": "suporte@folio-ai.app",
           "contactType": "support",
-          "availableLanguage": ["Portuguese"]
+          "availableLanguage": ["pt-BR"]
         }
       },
       {
@@ -1078,12 +1083,14 @@
         "url": "https://app.folio-ai.app/",
         "applicationCategory": "HealthApplication",
         "operatingSystem": "Web",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "BRL"
+        },
         "inLanguage": "pt-BR",
         "description": "Suba um PDF, o Folio AI extrai os valores dos seus exames, organiza cronologicamente e visualiza tendências. Não interpreta resultados nem dá conselho médico — só organização.",
-        "areaServed": {
-          "@type": "Country",
-          "name": "Brasil"
-        },
+        "areaServed": "BR",
         "publisher": { "@id": "https://folio-ai.app/#organization" }
       },
       {
@@ -1150,7 +1157,7 @@
         <div class="hero-copy">
           <span class="hero-eyebrow" data-reveal>Disponível agora</span>
 
-          <h1 class="hero-headline" id="hero-headline" data-reveal data-delay="1">
+          <h1 class="hero-headline" id="hero-headline">
             Seus exames,<br>em <em>um lugar</em> só.
           </h1>
 
@@ -1184,13 +1191,13 @@
       </div>
 
       <!-- Phones -->
-      <div class="hero-phone-wrap" aria-hidden="true" data-reveal data-delay="2">
+      <div class="hero-phone-wrap" aria-hidden="true">
         <div class="phone-back">
           <div class="phone-outer-shell">
             <div class="phone-inner-core">
               <div class="phone-island"></div>
               <div class="phone-screen">
-                <img class="phone-screenshot" src="hero-app-home.webp" width="1080" height="2328" alt="" loading="eager">
+                <img class="phone-screenshot" src="hero-app-home.webp" width="1080" height="2328" alt="Tela inicial do app Folio com a lista de exames enviados" loading="lazy">
               </div>
             </div>
           </div>
@@ -1200,7 +1207,7 @@
             <div class="phone-inner-core">
               <div class="phone-island"></div>
               <div class="phone-screen">
-                <img class="phone-screenshot" src="hero-app-metrics.webp" width="1080" height="2328" alt="" loading="eager" fetchpriority="high">
+                <img class="phone-screenshot" src="hero-app-metrics.webp" width="1080" height="2328" alt="Tela do app Folio mostrando a evolução de um biomarcador ao longo do tempo em um gráfico de linha" loading="eager" fetchpriority="high">
               </div>
             </div>
           </div>
@@ -1228,7 +1235,7 @@
           <div class="extraction-panel"
             data-reveal data-delay="1"
             role="img"
-            aria-label="Painel mostrando extração automática de um hemograma com 12 valores identificados">
+            aria-label="Painel mostrando extração automática de um hemograma, com 3 dos 12 valores identificados visíveis">
             <div class="ep-topbar">
               <span class="ep-topbar-title">Extração de resultados</span>
               <span class="ep-topbar-sub">Folio AI</span>
@@ -1243,28 +1250,28 @@
               </div>
               <div class="ep-status done">
                 <span class="ep-status-dot"></span>
-                Extração concluída · 12 valores identificados
+                Extração concluída · 3 de 12 valores
               </div>
               <div class="ep-results">
                 <div class="ep-result-row">
                   <span class="ep-result-name">Hemoglobina</span>
                   <div class="ep-result-right">
                     <span class="ep-result-val">14,2 g/dL</span>
-                    <span class="ep-result-badge ok">Normal</span>
+                    <span class="ep-result-badge ok">Na faixa</span>
                   </div>
                 </div>
                 <div class="ep-result-row">
                   <span class="ep-result-name">Colesterol LDL</span>
                   <div class="ep-result-right">
                     <span class="ep-result-val">138 mg/dL</span>
-                    <span class="ep-result-badge warn">Atenção</span>
+                    <span class="ep-result-badge warn">Acima</span>
                   </div>
                 </div>
                 <div class="ep-result-row">
                   <span class="ep-result-name">Glicose</span>
                   <div class="ep-result-right">
                     <span class="ep-result-val">92 mg/dL</span>
-                    <span class="ep-result-badge ok">Normal</span>
+                    <span class="ep-result-badge ok">Na faixa</span>
                   </div>
                 </div>
               </div>
@@ -1308,7 +1315,7 @@
                       <p class="bio-value">14,2 g/dL</p>
                       <p class="bio-range">ref: 12,0 – 16,0</p>
                     </div>
-                    <span class="bio-badge ok">Normal</span>
+                    <span class="bio-badge ok">Na faixa</span>
                   </div>
                 </div>
                 <div class="bio-row">
@@ -1321,7 +1328,7 @@
                       <p class="bio-value">138 mg/dL</p>
                       <p class="bio-range">ref: &lt; 130</p>
                     </div>
-                    <span class="bio-badge warn">Atenção</span>
+                    <span class="bio-badge warn">Acima</span>
                   </div>
                 </div>
                 <div class="bio-row">
@@ -1334,7 +1341,7 @@
                       <p class="bio-value">92 mg/dL</p>
                       <p class="bio-range">ref: 70 – 99</p>
                     </div>
-                    <span class="bio-badge ok">Normal</span>
+                    <span class="bio-badge ok">Na faixa</span>
                   </div>
                 </div>
                 <div class="bio-row">
@@ -1347,7 +1354,7 @@
                       <p class="bio-value">18 ng/mL</p>
                       <p class="bio-range">ref: 30 – 100</p>
                     </div>
-                    <span class="bio-badge low">Baixo</span>
+                    <span class="bio-badge low">Abaixo</span>
                   </div>
                 </div>
                 <div class="bio-row">
@@ -1360,7 +1367,7 @@
                       <p class="bio-value">45 ng/mL</p>
                       <p class="bio-range">ref: 12 – 150</p>
                     </div>
-                    <span class="bio-badge ok">Normal</span>
+                    <span class="bio-badge ok">Na faixa</span>
                   </div>
                 </div>
               </div>
@@ -1507,7 +1514,7 @@
               <a href="https://app.folio-ai.app" class="form-submit" target="_blank" rel="noopener" data-va-cta="use-app" data-va-location="footer">Usar o app agora</a>
             </div>
             <p class="form-trust">
-              Plano gratuito para começar. Conforme LGPD.
+              Plano gratuito para começar. Conforme LGPD. Conexões criptografadas e controles de acesso por conta.
             </p>
           </div>
         </div>
@@ -1519,6 +1526,8 @@
             <a href="/terms-of-service.html">Termos de Uso</a>
             <span class="footer-sep" aria-hidden="true">/</span>
             <a href="/account-deletion.html">Excluir conta</a>
+            <span class="footer-sep" aria-hidden="true">/</span>
+            <a href="mailto:suporte@folio-ai.app">Suporte: suporte@folio-ai.app</a>
           </p>
           <p class="footer-copy-r">&copy; 2026 Folio AI</p>
         </div>
