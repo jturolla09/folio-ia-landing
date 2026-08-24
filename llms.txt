@@ -4,10 +4,11 @@
 
 ## URLs oficiais
 
-- Landing page: https://folio-ai.app/
-- Aplicativo: https://app.folio-ai.app/
-- Política de Privacidade: https://folio-ai.app/privacy-policy.html
-- Termos de Uso: https://folio-ai.app/terms-of-service.html
+- [Landing page](https://folio-ai.app/): visão geral do produto, perguntas frequentes e link para o app.
+- [Aplicativo](https://app.folio-ai.app/): onde o usuário envia exames e acompanha a linha do tempo.
+- [Política de Privacidade](https://folio-ai.app/privacy-policy.html): dados coletados, provedores, retenção e direitos do titular.
+- [Termos de Uso](https://folio-ai.app/terms-of-service.html): condições de uso do serviço.
+- [Excluir conta](https://folio-ai.app/account-deletion.html): como pedir a exclusão da conta e dos dados.
 
 ## O que o produto faz
 
