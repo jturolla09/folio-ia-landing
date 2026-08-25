@@ -991,8 +991,6 @@
       min-height: 100svh;
       padding-top: 96px;
     }
-    .phone-back { display: none; }
-
     /* Below 768px the phone leaves absolute positioning entirely and
        becomes a normal flex child after .hero-inner, so it flows below
        the copy and cannot overlap the CTA, trust line or chips at ANY
@@ -1001,27 +999,42 @@
        viewports: on a real handset with browser chrome eating ~200px
        the phone rode up over the chips.
 
-       The wrapper is a fixed-height window with overflow: hidden,
-       which reproduces the bleed deterministically. Its height is a
-       multiple of the phone width, never of the viewport, so the
-       margin to the QA fixture text in hero-app-metrics.webp cannot
-       drift as screen height changes. At 1.55x the width the lowest
-       visible asset row is about y=1436, well clear of y=1770. */
+       Both phones stay visible here, same cascade as desktop, instead
+       of hard-cropping the front phone in a fixed-height overflow:
+       hidden window -- that crop read as a broken, cut-off image on
+       real handsets. The wrap is a flex row so the back phone (first
+       in the DOM) sits behind and to the left, pulled under the front
+       phone with a negative margin instead of absolute bleed. */
     .hero-phone-wrap {
       position: relative;
       inset: auto;
-      height: calc(clamp(190px, 54vw, 220px) * 1.55);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
       margin-top: 40px;
-      overflow: hidden;
+      padding-bottom: 12px;
+      overflow: visible;
     }
     .phone-front {
       position: relative;
       right: auto;
       bottom: auto;
-      --phone-w: clamp(190px, 54vw, 220px);
+      --phone-w: clamp(150px, 46vw, 190px);
       width: var(--phone-w);
-      margin-inline: auto;
       transform: none;
+      z-index: 3;
+    }
+    .phone-back {
+      display: block;
+      position: relative;
+      right: auto;
+      bottom: auto;
+      --phone-w: calc(clamp(150px, 46vw, 190px) * 0.78);
+      width: var(--phone-w);
+      margin-right: calc(clamp(150px, 46vw, 190px) * -0.58);
+      margin-bottom: calc(var(--phone-w) * 0.22);
+      transform: rotate(-4deg);
+      z-index: 2;
     }
     .hero-copy { max-width: 34ch; }
   }
