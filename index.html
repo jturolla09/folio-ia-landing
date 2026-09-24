@@ -343,6 +343,9 @@
   }
   .form-submit:hover         { background: var(--on-cobalt); color: var(--cobalt-deep); }
   .form-submit:focus-visible { outline: 2px solid var(--cream); outline-offset: 2px; }
+  .form-submit--outline { gap: 8px; background: transparent; color: var(--on-cobalt); border: 1px solid var(--cream); }
+  .form-submit--outline:hover { background: var(--cream); color: var(--ink); }
+  .form-submit--outline svg { width: 18px; height: 18px; flex-shrink: 0; }
 
   /* ===== EXTRACTION PANEL ===== */
   .beat-split {
@@ -1096,7 +1099,8 @@
         "name": "Folio AI",
         "url": "https://app.folio-ai.app/",
         "applicationCategory": "HealthApplication",
-        "operatingSystem": "Web",
+        "operatingSystem": "Web, Android",
+        "downloadUrl": "https://play.google.com/store/apps/details?id=app.folioai.mobile",
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -1182,6 +1186,7 @@
           <div data-reveal data-delay="3">
             <div class="form-row">
               <a href="https://app.folio-ai.app" class="form-submit" target="_blank" rel="noopener" data-va-cta="use-app" data-va-location="hero">Usar o app agora</a>
+              <a href="https://play.google.com/store/apps/details?id=app.folioai.mobile" class="form-submit form-submit--outline" target="_blank" rel="noopener" data-va-cta="google-play" data-va-location="hero"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#00CFFF" d="M3.5 2.2v19.6L13.8 12z"/><path fill="#00D26A" d="M3.5 21.8c.4.4 1 .5 1.6.1l11.3-6.5-2.6-3.4z"/><path fill="#FFCE00" d="M3.5 2.2c.4-.4 1-.5 1.6-.1l11.3 6.5-2.6 3.4z"/><path fill="#FF4B55" d="m16.4 8.6 3.8 2.2c.9.5.9 1.9 0 2.4l-3.8 2.2-2.6-3.4z"/></svg>Baixar no Google Play</a>
             </div>
             <p class="form-trust">
               Plano gratuito para começar.
@@ -1190,7 +1195,7 @@
             </p>
             <ul class="platforms" aria-label="Disponibilidade por plataforma">
               <li class="platform platform--live"><span class="platform-name">Web</span> <span class="platform-status">disponível</span></li>
-              <li class="platform"><span class="platform-name">Android</span> <span class="platform-status">em breve</span></li>
+              <li class="platform platform--live"><span class="platform-name">Android</span> <span class="platform-status">disponível</span></li>
               <li class="platform"><span class="platform-name">iOS</span> <span class="platform-status">em breve</span></li>
             </ul>
           </div>
@@ -1526,6 +1531,7 @@
           <div class="footer-cta-form" data-reveal data-delay="1">
             <div class="form-row">
               <a href="https://app.folio-ai.app" class="form-submit" target="_blank" rel="noopener" data-va-cta="use-app" data-va-location="footer">Usar o app agora</a>
+              <a href="https://play.google.com/store/apps/details?id=app.folioai.mobile" class="form-submit form-submit--outline" target="_blank" rel="noopener" data-va-cta="google-play" data-va-location="footer"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#00CFFF" d="M3.5 2.2v19.6L13.8 12z"/><path fill="#00D26A" d="M3.5 21.8c.4.4 1 .5 1.6.1l11.3-6.5-2.6-3.4z"/><path fill="#FFCE00" d="M3.5 2.2c.4-.4 1-.5 1.6-.1l11.3 6.5-2.6 3.4z"/><path fill="#FF4B55" d="m16.4 8.6 3.8 2.2c.9.5.9 1.9 0 2.4l-3.8 2.2-2.6-3.4z"/></svg>Baixar no Google Play</a>
             </div>
             <p class="form-trust">
               Plano gratuito para começar. Conforme LGPD. Conexões criptografadas e controles de acesso por conta.
@@ -1600,10 +1606,10 @@
   <script defer src="/_vercel/insights/script.js"></script>
   <script>
     document.addEventListener('click', function (e) {
-      var el = e.target.closest('[data-va-cta="use-app"]');
+      var el = e.target.closest('[data-va-cta]');
       if (!el) return;
       window.va('event', {
-        name: 'use-app-click',
+        name: el.getAttribute('data-va-cta') + '-click',
         location: el.getAttribute('data-va-location') || 'unknown'
       });
     });
